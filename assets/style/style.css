@@ -1,25 +1,28 @@
 *{
     padding: 0;
     margin: 0;
+    color: whitesmoke;
 }
 
 body{
-    background: #124224;
 background: radial-gradient(circle, rgba(18, 66, 36, 1) 0%, rgba(7, 36, 16, 1) 50%, rgba(2, 20, 9, 1) 100%);
 }
 
+.gray-color{
+    background-color: #4D5951;    
+}   
 
 header{
     width: 100%;
 }
 
 nav{
-    background-color: #4D5951;
-    height: 80px;
+    height: 100px;
     border-bottom: 1px solid #594D4D;
     display: flex;
     justify-content: space-between;
     width: 100%;
+    box-shadow: 10px 10px 20px 1px rgb(0, 0, 0);
 }
 
 .flex-container-row{
@@ -35,17 +38,16 @@ nav{
     align-items: center;
     justify-content: center;
     height: 100%;
-    gap: 40px;
     flex-direction: column;
 }
 
 nav a{
     text-decoration: none;
-    font-size: 25px;
+    font-size: 22px;
 }
 
 nav a:hover{
-    opacity: 0.5;
+    opacity: 0.8;
     text-decoration:underline;
 }
 
@@ -55,20 +57,110 @@ nav div{
 .roboto{
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 200;
+    font-weight: 600;
     font-style: normal;
     font-variation-settings:
       "wdth" 100;
-    color: whitesmoke;
   }
 
+.asap{
+    font-family: "Asap", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 250;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }
+  
 .showcase-game{
     width: 800px;
     height: 400px;
     background-color: #4D5951;
     box-shadow: 10px 10px 20px 1px black;
+    margin-top: 40px;
 }
 
 .banner{
     z-index: -1;
+}
+
+.login-menu{
+    height: max-content;
+    width: 350px;
+    margin: 80px 0 80px 0;
+    border-radius: 5px;
+    box-shadow: 10px 10px 20px 1px black;
+    border: solid 1px rgb(38, 39, 38);
+
+
+
+}
+
+.login-menu a{
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+a:hover{
+    opacity: 0.7;
+}
+
+.login-menu form{
+    width: 300px;
+}
+
+.login-menu button{
+    color: black;
+    width: 130px;
+    height: 30px;
+    border-radius: 4px;
+    border: none;
+    background-color: #d1cfcf;
+    cursor: pointer;
+    margin: 15px 0 15px 0;
+
+}
+
+form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 17px;
+}
+
+input + label{
+    margin-top: 20px;
+}
+
+input + button{
+    margin-top: 20px;
+}
+
+button:hover{
+    opacity: 0.8;
+}
+
+input{
+    border-radius: 5px;
+    border: none
+    
+}
+h2{
+    font-weight: 400;
+    color: white
+}
+
+.login-menu h2{
+    margin-top: 20px;
+}
+
+.login-menu input{
+    height: 20px;
+    background-color: #dddddd;
+    color: black;
+}
+
+.fundo-jogos{
+    background-image: url(../img/Imagem\ de\ fundo\ projeto.png);
+    background-size: cover;
 }
