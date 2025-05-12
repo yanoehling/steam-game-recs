@@ -164,3 +164,11 @@ h2{
     background-image: url(../img/Imagem\ de\ fundo\ projeto.png);
     background-size: cover;
 }
+
+.status-fail {
+    color: red; 
+}
+
+.status-ok {
+    color: green;
+}

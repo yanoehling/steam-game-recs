@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="../assets/js/script.js" defer></script>
 </head>
 <body class="fundo-jogos">
     <main class="flex-container-column roboto">
@@ -25,26 +26,32 @@
             </nav>
         </header>
         <section class="login-menu gray-color flex-container-column">
-            <h2 style="margin-bottom: 20px;">Faça o Login</h2>
+            <h2 style="margin-bottom: 20px;">Faça sua Conta</h2>
             <form action="" class="asap">
 
                 <label for="">Escreva seu nome completo:</label>
-                <input type="text" name="nome" id="name">
+                <input type="text" name="nome" id="newName" onblur="validaTextoEmBranco(this, 'statusName', 'Nome')">
+                <p id="statusName"></p>
 
                 <label for="">Selecione a data do seu nascimento:</label>
-                <input type="date" name="birthday" id="birthday">
+                <input type="date" name="birthday" id="newBirthday">
+                <p id="statusBirthday"></p>
 
                 <label for="">Escreva um nome para seu usuário:</label>
-                <input type="text" name="user" id="user">
+                <input type="text" name="user" id="newUser" onblur="validaTextoEmBranco(this, 'statusUser', 'Nome')">
+                <p id="statusUser"></p>
 
                 <label for="">Escreva seu email:</label>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="newEmail" onblur="validaEmail(this, 'statusEmail', 'E-mail')">
+                <p id="statusEmail"></p>
 
                 <label for="">Digite uma senha:</label>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="newPassword" onblur="validaTextoEmBranco(this, 'statusPassword', 'Senha')">
+                <p id="statusPassword"></p>
 
                 <label for="">Confirme sua senha:</label>
-                <input type="password" name="confirm_password" id="confirm_password">
+                <input type="password" name="confirm_password" id="newConfirmPassword" onblur="validaSenha('newPassword', this, 'statusConfirmPassword')">
+                <p id="statusConfirmPassword"></p>
 
                 <div class="flex-container-row">
                     <button type="submit">Enviar</button>
