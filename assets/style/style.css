@@ -78,10 +78,14 @@ nav div{
     background-color: #4D5951;
     box-shadow: 10px 10px 20px 1px black;
     margin-top: 40px;
+    background-size:contain;
+    overflow: hidden;
 }
 
-.banner{
-    z-index: -1;
+.showcase-div{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 
 .login-menu{
@@ -171,4 +175,9 @@ h2{
 
 .status-ok {
     color: green;
+}
+
+.div-showcase{
+    display: flex;
+    flex-direction: row;
 }

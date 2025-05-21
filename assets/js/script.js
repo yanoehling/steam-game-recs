@@ -54,3 +54,20 @@ function validaSenha(senha1, senha2, status) {
         document.getElementById(status).innerHTML = '🗸'
     }
 }
+
+//variavel count é para saber qual banner ele está mostrando, e como ele vai atualizando decidi
+//fazer ele global
+let count = 0
+
+//É a quantidade de jogos no showcase menos 1, o menos 1 é para um calculo que faz na função
+let qt = 2
+setInterval(()=>{
+    count++
+    if(count > qt){
+        count = 0
+    }
+    let marginpercent = (100*count*qt)/qt;
+    const slider = document.getElementById("slider");
+    slider.style.marginLeft = `-${marginpercent}%`;
+    slider.style.transition = "1s";
+}, 5000)
