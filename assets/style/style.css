@@ -80,6 +80,8 @@ nav div{
     margin-top: 40px;
     background-size:contain;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 .showcase-div{
@@ -95,8 +97,6 @@ nav div{
     border-radius: 5px;
     box-shadow: 10px 10px 20px 1px black;
     border: solid 1px rgb(38, 39, 38);
-
-
 
 }
 
@@ -180,4 +180,62 @@ h2{
 .div-showcase{
     display: flex;
     flex-direction: row;
+}
+
+.showcase-buttons{
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 750px;
+    height: 400px;
+    align-items: center;
+}
+
+.btn{
+    background-image: url(../img/Seta.png);
+    width: 30px;
+    height: 51px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.back-btn{
+    transform: scaleX(-1);
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    gap: 150px;
+    margin-bottom: 100px;
+}
+
+.game-list-horizontal{
+    width: 100vw;
+    padding-left: 70px;
+}
+
+.games-horizontal{
+    margin-top: 30px;
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.games{
+    border-radius: 10px;
+    background-color:#4D5951;
+    height: 238px;
+    width: 178px;
+    background-size: cover;
+    cursor: pointer;
+
+}
+
+.price{
+    font-size: 12px;
 }

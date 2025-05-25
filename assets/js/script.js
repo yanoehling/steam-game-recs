@@ -66,8 +66,8 @@ setInterval(()=>{
     if(count > qt){
         count = 0
     }
-    let marginpercent = (100*count*qt)/qt;
+    let marginpercent = 200*count;
     const slider = document.getElementById("slider");
     slider.style.marginLeft = `-${marginpercent}%`;
     slider.style.transition = "1s";
-}, 5000)
+}, 3000)
