@@ -43,7 +43,7 @@ router.post(
 );
 
 router.post(
-    '/', 
+    '/create', 
     [
         body('email').isEmail().withMessage('Email inválido'),
         body('password').isString().withMessage('Senha deve ter pelo menos 8 caracteres'),
