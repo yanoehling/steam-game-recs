@@ -1,6 +1,46 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
+const User = require('./model');
+const jwt = require('jsonwebtoken');
+
+router.post(
+    '/login', 
+    [
+        body('userName').isString().withMessage('Nome de usuário é obrigatório'),
+    body('password').isString().withMessage('Senha é obrigatória')
+    ], 
+    async (req, res) => {
+        const { userName, password } = req.body;
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        try {
+            const user = await User.findOne({ userName });
+            
+            if (!user) {
+                return res.status(401).json({ message: 'Usuário não encontrado' });
+            }
+
+            if (user.password !== password) {
+                return res.status(401).json({ message: 'Senha incorreta' });
+            }
+
+            const token = jwt.sign(
+                { userId: user._id, userName: user.userName },
+                'sua_chave_secreta_aqui', // Você deve mover isso para variáveis de ambiente
+                { expiresIn: '24h' }
+            );
+
+            res.json({ token });
+        } catch (error) {
+            res.status(500).json({ message: 'Erro ao fazer login' });
+        }
+    }
+);
 
 router.post(
     '/', 
