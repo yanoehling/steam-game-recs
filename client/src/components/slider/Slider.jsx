@@ -1,7 +1,8 @@
 import '../../style/main.css';
 import undertale_banner from './Undertale_banner.png';
 import hollowKnight_banner from './Hollow_Knight_Banner.png';
-import lastOfUs_banner from './The_Last_Of_Us_Banner.png'
+import lastOfUs_banner from './The_Last_Of_Us_Banner.png';
+import { useNavigate } from 'react-router-dom';
 let qt = 2;
 let count = 0;
 let intervalId;
@@ -52,7 +53,7 @@ function Slider(){
     <>
       <section className='showcase-game'>
         <div className="showcase-div" id="slider">
-          <a href='#'><img src={undertale_banner} alt="Undertale Banner"/></a>
+          <a href="/game"><img src={undertale_banner} alt="Undertale Banner"/></a>
           <a href="#"><img src={hollowKnight_banner} alt="Hollow Knight Banner"/></a>
           <a href="#"><img src={lastOfUs_banner} alt="The Last Of Us Banner"/></a>
         </div>

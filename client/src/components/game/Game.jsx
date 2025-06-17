@@ -1,6 +1,6 @@
 import '../../style/main.css';
 import '../../assets/games_img/img_import'
-
+import { useNavigate } from 'react-router-dom';
 
 function Game({ img, title, price}){
     return(

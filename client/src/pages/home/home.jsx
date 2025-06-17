@@ -1,7 +1,7 @@
 import '../../style/main.css';
 import Slider from '../../components/slider/Slider.jsx'
 import Game from '../../components/game/Game.jsx'
-import {gamesInfos} from '../../assets/games_img/img_import.js'
+import {gamesInfos} from '../../assets/games_img/img_import.js';
 
 function Home() {
   return (
