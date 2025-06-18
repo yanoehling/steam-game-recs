@@ -1,6 +1,7 @@
 import '../../style/main.css';
 import Slider from '../../components/slider/Slider.jsx'
 import Game from '../../components/game/Game.jsx'
+import LoginButton from '../../components/login_button/login_button.jsx';
 import {gamesInfos} from '../../assets/games_img/img_import.js';
 
 function Home() {
@@ -9,13 +10,14 @@ function Home() {
       <header className="flex-container-column">
         <nav className="gray-color">
           <div className="flex-container-row roboto">
-            <a href="index.html">LOGO</a>
+            <a href="/">LOGO</a>
             <a href="#">Loja</a>
             <a href="#">Suporte</a>
             <a href="">Conversa</a>
           </div>
+          <LoginButton />
         </nav>
-        <Slider ></Slider>
+        <Slider></Slider>
       </header>
       <section className="game-list-horizontal">
         <h2>Jogos do Momento</h2>
