@@ -1,8 +1,16 @@
-const mongoose = require('mongoose');
+MongoClient = require('mongodb').MongoClient
 
-async function connectDB() {
-  await mongoose.connect('mongodb://localhost:27017/web-app');
-  console.log('✅ MongoDB conectado');
+const URI = process.env.MONGODB_URI || ''; //ADICIONAR HTTP MONGO
+
+const client = new MongoClient(URI);
+
+try {
+    await client.connect();
+    console.log("Conectado ao MongoDB");
+} catch (err) {
+    console.error(err);
 }
 
-module.exports = connectDB;
+let db = client.db('todoapp');
+
+export default db;
