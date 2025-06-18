@@ -3,6 +3,16 @@ import Slider from '../../components/slider/Slider.jsx'
 import Game from '../../components/game/Game.jsx'
 import LoginButton from '../../components/login_button/login_button.jsx';
 import {gamesInfos} from '../../assets/games_img/img_import.js';
+import NavBar from '../../components/nav/nav.jsx';
+import hollowKnightBanner from './Hollow_Knight_Banner.png';
+import undertaleBanner from './Undertale_banner.png';
+import theLastOfUsBanner from './The_Last_Of_Us_Banner.png';
+
+const showcaseInfo = [
+  {id:1, img:undertaleBanner, href:'/game', name:'Undertale Banner'},
+  {id:2, img:hollowKnightBanner, href:'/game', name:'Hollow Knight Banner'},
+  {id:3, img:theLastOfUsBanner, href:'/game', name:'The Last Of Us Banner'}
+]
 
 function Home() {
   return (
@@ -10,14 +20,13 @@ function Home() {
       <header className="flex-container-column">
         <nav className="gray-color">
           <div className="flex-container-row roboto">
-            <a href="/">LOGO</a>
+            <a href="index.html">LOGO</a>
             <a href="#">Loja</a>
             <a href="#">Suporte</a>
             <a href="">Conversa</a>
           </div>
-          <LoginButton />
         </nav>
-        <Slider></Slider>
+        <Slider ></Slider>
       </header>
       <section className="game-list-horizontal">
         <h2>Jogos do Momento</h2>

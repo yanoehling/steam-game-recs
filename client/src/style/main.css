@@ -5,11 +5,12 @@
 }
 
 body{
-background: radial-gradient(circle, rgba(18, 66, 36, 1) 0%, rgba(7, 36, 16, 1) 50%, rgba(2, 20, 9, 1) 100%);
+  background: #4D4242;
+  background: radial-gradient(circle,rgba(77, 66, 66, 1) 0%, rgba(38, 33, 33, 1) 50%, rgba(13, 12, 12, 1) 100%);
 }
 
 .gray-color{
-  background-color: #4D5951;    
+  background-color: #4D4444;    
 }   
 
 header{
@@ -75,7 +76,7 @@ nav div{
 .showcase-game{
   width: 800px;
   height: 400px;
-  background-color: #4D5951;
+  background-color: #000000;
   box-shadow: 10px 10px 20px 1px black;
   margin-top: 40px;
   background-size:contain;
@@ -89,6 +90,7 @@ nav div{
   display: flex;
   flex-direction: row;
   width: 100%;
+
 }
 
 .login-menu{
@@ -240,4 +242,102 @@ main{
 
 a{
   cursor: pointer;
+}
+
+.game-promotion{
+  margin-top: 20px
+}
+
+.description_section{
+  font-family: "Motiva Sans", Sans-serif;
+  font-weight: 100;
+  width: 300px;
+  height: 380px;
+  margin-top: 40px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #cecece;
+  align-items: center;
+  padding: 20px 15px 10px 15px;
+  box-shadow: 10px 10px 20px 1px black; 
+}
+
+.description_section > p{
+  margin-bottom: 20px;
+}
+.infos{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.categories{
+  width: 230px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+}
+
+.categories > li{
+  background-color: #302d2d;
+  width: max-content;
+  border-radius: 5px;
+  list-style: none;
+  padding: 5px;
+  font-size: 12px;
+}
+
+.categories > li:hover{
+  cursor:default;
+  opacity: 0.8;
+}
+
+
+.price-div{
+  font-family: "Motiva Sans", Sans-serif;
+  width: 740px;
+  height: 90px;
+  margin-top: 60px;
+  margin-right: 370px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 5px;
+}
+
+.price-div button{
+  font-family: "Motiva Sans", Sans-serif;
+  border: none ;
+  background-color: #302d2d;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+.price-div button:hover{
+  cursor: pointer;
+}
+
+.user_buttons button{
+  font-family: "Motiva Sans", Sans-serif;
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 2px;
+}
+
+.user_buttons button:hover{
+  cursor: pointer;
+}
+
+.user_buttons{
+  margin-top: 10px;
+  margin-left: 100px;
+  gap: 20px;
 }
