@@ -1,7 +1,7 @@
 import '../../style/main.css';
-import undertale_banner from './Undertale_banner.png';
-import hollowKnight_banner from './Hollow_Knight_Banner.png';
-import lastOfUs_banner from './The_Last_Of_Us_Banner.png';
+import undertale_banner from '../../pages/home/Undertale_banner.png';
+import hollowKnight_banner from '../../pages/home/Hollow_Knight_Banner.png';
+import lastOfUs_banner from '../../pages/home/The_Last_Of_Us_Banner.png';
 import { useNavigate } from 'react-router-dom';
 let qt = 2;
 let count = 0;

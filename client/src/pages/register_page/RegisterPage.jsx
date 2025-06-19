@@ -1,86 +1,8 @@
 import '../../style/main.css';
-import Header from "../../components/header/Header"
+import NavBar from '../../components/nav/nav.jsx';
 import React, { useState } from "react";
-
-
-function Input({index, label, tipo, name, onblur}){
-    const [isValid, setIsValid] = React.useState(false)
-    const [text, setText] = React.useState('')
-    const handleOnBlur = (e) => {
-        let respostas = onblur(e, name, index)
-        setText(respostas.status)
-        setIsValid(respostas.validade)
-    }
-    
-    return(
-    <>
-        <label>{label}</label>
-        <input type={tipo} onBlur={handleOnBlur}/>
-        <p className={isValid ? 'status-ok' : 'status-fail'}>{text}</p>
-    </>
-    )
-}
-
-function Senhas({index1, index2, validaTexto, validaSenha}) {
-    const [isValid, setIsValid] = React.useState(Array(2).fill(false))
-    const [status, setStatus] = React.useState(Array(2).fill(''))
-    const [senhas, setSenhas] = React.useState(Array(2).fill(''))
-
-    const handleOnBlurTexto = (e) => {
-        let respostas = validaTexto(e, 'Senha', index1)
-        const nextStatus = status.map((c, i) => {
-            let next
-            i === 0 ? next = respostas.status : next = c
-            return next
-        });
-        setStatus(nextStatus)
-        const nextValid = isValid.map((c, i) => {
-            let next
-            i === 0 ? next = respostas.validade : next = c
-            return next
-        });
-        setIsValid(nextValid)
-        const nextSenha = senhas.map((c, i) => {
-            let next
-            i === 0 ? next = e.target.value : next = c
-            return next
-        });
-        setSenhas(nextSenha)
-    }
-    
-    const handleOnBlurSenha = (e) => {
-        let respostas = validaSenha(e, senhas[0], 'Senha', index2)
-        const nextText = status.map((c, i) => {
-            let next
-            i === 1 ? next = respostas.status : next = c
-            return next
-        });
-        setStatus(nextText)
-        const nextValid = isValid.map((c, i) => {
-            let next
-            i === 1 ? next = respostas.validade : next = c
-            return next
-        });
-        setIsValid(nextValid)
-        const nextSenha = senhas.map((c, i) => {
-            let next
-            i === 1 ? next = e.target.value : next = c
-            return next
-        });
-        setSenhas(nextSenha)
-    }
-
-    return(
-    <>
-        <label>Escreva sua senha:</label>
-        <input type='password' onBlur={handleOnBlurTexto}/>
-        <p className={isValid[0] ? 'status-ok' : 'status-fail'}>{status[0]}</p>
-        <label>Repita sua senha:</label>
-        <input type='password' onBlur={handleOnBlurSenha}/>
-        <p className={isValid[1] ? 'status-ok' : 'status-fail'}>{status[1]}</p>
-    </>
-    )
-}
+import Campo from '../../components/campos/Campo'
+import CampoSenhas from '../../components/campos/CampoSenhas';
 
 export default function RegisterPage(){
     const [validez, setValidez] = React.useState(Array(5).fill(false))
@@ -157,21 +79,23 @@ export default function RegisterPage(){
     //Return final
     return (
         <main className="flex-container-column roboto">
-            <Header />
+            <header>
+                <NavBar />
+            </header>
             <section className="login-menu gray-color flex-container-column">
-            <h2 style={{marginBottom: '20px'}}>Faça sua Conta</h2>
-            <form action="" className="asap">
-                <Input index={0} label='Escreva seu nome completo:' tipo="text" name="Nome" onblur={validaEmBranco}/>
-                <Input index={1} label='Escreva um nome para seu usuário:' tipo='text' name='Usuário' onblur={validaEmBranco}/>
-                <Input index={2} label='Insira sua data de nascimento:' tipo='date' name='Data de nascimento' onblur={validaEmBranco}/>
-                <Input index={3} label='Escreva seu e-mail:' tipo='email' name='E-mail' onblur={validaEmail}/>
-                <Senhas index1={4} index={5} validaTexto={validaEmBranco} validaSenha={validaSenha}/>
-                <div className="flex-container-row">
-                    <button>Enviar</button>
-                </div>
-                
-            </form>
-        </section>
+                <h2 style={{marginBottom: '20px'}}>Faça sua Conta</h2>
+                <form action="" className="asap">
+                    <Campo index={0} label='Escreva seu nome completo:' tipo="text" name="Nome" onblur={validaEmBranco}/>
+                    <Campo index={1} label='Escreva um nome para seu usuário:' tipo='text' name='Usuário' onblur={validaEmBranco}/>
+                    <Campo index={2} label='Insira sua data de nascimento:' tipo='date' name='Data de nascimento' onblur={validaEmBranco}/>
+                    <Campo index={3} label='Escreva seu e-mail:' tipo='email' name='E-mail' onblur={validaEmail}/>
+                    <CampoSenhas index1={4} index={5} validaTexto={validaEmBranco} validaSenha={validaSenha}/>
+                    <div className="flex-container-row">
+                        <button type='button'>Enviar</button>
+                    </div>
+                    
+                </form>
+            </section>
         </main>
     )
 }

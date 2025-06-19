@@ -18,14 +18,7 @@ function Home() {
   return (
     <main className="flex-container-column roboto">
       <header className="flex-container-column">
-        <nav className="gray-color">
-          <div className="flex-container-row roboto">
-            <a href="index.html">LOGO</a>
-            <a href="#">Loja</a>
-            <a href="#">Suporte</a>
-            <a href="">Conversa</a>
-          </div>
-        </nav>
+        <NavBar />
         <Slider ></Slider>
       </header>
       <section className="game-list-horizontal">
