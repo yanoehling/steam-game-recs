@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GamePage from "./pages/game_page/GamePage.jsx"
 import LoginPage from "./pages/login_page/LoginPage.jsx";
 import RegisterPage from "./pages/register_page/RegisterPage.jsx";
+import EditProfilePage from "./pages/edit_profile_page/EditProfilePage.jsx";
 
 const router = createBrowserRouter([
     {
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
     {
         path: '/register',
         element: <RegisterPage />
-    }
+    },
+    {
+        path: '/edit/:userId',
+        element: <EditProfilePage />
+    },
 ])
 
 createRoot(document.getElementById('root')).render(

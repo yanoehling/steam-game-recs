@@ -25,10 +25,10 @@ app.use(express.static(root + '/frontend'))
 //const collection = db.collection("users");
 let collection = ["julio", "yan"];
 
-function findUser(username) {
+function findUserIndex(username) {
   for (let i = 0; i < collection.length; i++) {
     if (collection[i].username === username) {
-      return collection[i]
+      return i
     }
   }
   return null
@@ -36,7 +36,7 @@ function findUser(username) {
 
 app.post("/check-user", async (req, res) => {
   try {
-    const user = findUser(req.body.username)
+    const user = findUserIndex(req.body.username)
 
     if (!user) {
       res.status(200).send({
@@ -58,10 +58,11 @@ app.post("/check-user", async (req, res) => {
 app.post("/register-account", async (req, res) => {
   try {
     const user = {
-        username: req.body.username,
-        birthday: req.body.birthday,
-        email: req.body.email,
-        password: req.body.password,
+      name: req.body.name,
+      username: req.body.username,
+      birthday: req.body.birthday,
+      email: req.body.email,
+      password: req.body.password,
     };
 
     //let result = await collection.insertOne(users);
@@ -80,17 +81,17 @@ app.post("/register-account", async (req, res) => {
 
 app.post("/login-account", async (req, res) => {
   try {
-    const user = findUser(req.body.username)
+    const user = findUserIndex(req.body.username)
     if (!user) {
       res.status(200).send({
         userExists: false,
       })
-    } else if (user.password === req.body.password) {
+    } else if (collection[user].password === req.body.password) {
       res.status(200).send({
         userExists: true,
       })
     } else {
-      res.status(200).send({
+      res.status(400).send({
         userExists: false,
       })
     }
@@ -98,6 +99,36 @@ app.post("/login-account", async (req, res) => {
     console.error(error);
     res.status(500).send({
       errmsg: "Falha ao pegar registro.",
+    });
+  }
+})
+
+app.patch("/edit", async (req, res) => {
+  try {
+    const id = req.body.id;
+    const user = {
+      name: req.body.name,
+      username: req.body.username,
+      birthday: req.body.birthday,
+      email: req.body.email,
+      password: req.body.password,
+    };
+    const index = findUserIndex(id)
+    if (index) {
+      collection[index] = user
+      res.status(200).send({
+        msg: "Sucesso ao editar perfil.",
+      })
+    } else {
+      res.status(400).send({
+        msg: "Falha ao editar perfil.",
+      })
+    }
+
+  } catch(error) {
+    console.error(error);
+    res.status(500).send({
+      msg: "Falha ao editar perfil.",
     });
   }
 })

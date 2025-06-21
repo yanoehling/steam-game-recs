@@ -2,7 +2,7 @@ import '../../style/main.css';
 import React, { useState } from "react";
 
 
-export default function CampoSenhas({index1, index2, validaTexto, validaSenha}) {
+export default function CampoSenhas({index1, index2, validaTexto, validaSenha, valor1='', valor2=''}) {
     const [isValid, setIsValid] = React.useState(Array(2).fill(false))
     const [status, setStatus] = React.useState(Array(2).fill(''))
     const [senhas, setSenhas] = React.useState(Array(2).fill(''))

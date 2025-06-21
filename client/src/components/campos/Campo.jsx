@@ -1,7 +1,7 @@
 import '../../style/main.css';
 import React, { useState } from "react";
 
-export default function Campo({index, label, tipo, name, onblur}){
+export default function Campo({index, label, tipo, name, onblur, valor=''}){
     const [isValid, setIsValid] = React.useState(false)
     const [text, setText] = React.useState('')
     const handleOnBlur = async (e) => {
