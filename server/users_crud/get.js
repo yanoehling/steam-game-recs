@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb";
 
 const router = express.Router();
 //const collection = db.collection("users");
-const collection = ["julio", "yan"];
+let collection = ["julio", "yan"];
 
 router.get("/", async (req, res) => {
   try {
