@@ -20,10 +20,18 @@ app.use(cors({
     origin: '*'
 }));
 
-app.use(express.static(root + '/frontend'))
+app.use(express.static(root + '/client'))
 
 //const collection = db.collection("users");
-let collection = ["julio", "yan"];
+let collection = [{
+      name: "yan manica",
+      username: "yanma",
+      birthday: "21-03-2005",
+      email: "yanmano@gmail.com",
+      password: "abc",
+    }];
+
+    console.log(collection)
 
 function findUserIndex(username) {
   for (let i = 0; i < collection.length; i++) {
@@ -34,9 +42,11 @@ function findUserIndex(username) {
   return null
 }
 
-app.post("/check-user", async (req, res) => {
+
+app.post("/check-user", async (req, res) => {  //checa se user existe no banco
   try {
     const user = findUserIndex(req.body.username)
+    console.log(`user a checar: ${user}`)
 
     if (!user) {
       res.status(200).send({
@@ -55,7 +65,8 @@ app.post("/check-user", async (req, res) => {
   }
 })
 
-app.post("/register-account", async (req, res) => {
+
+app.post("/register-account", async (req, res) => {   //registra novo user
   try {
     const user = {
       name: req.body.name,
@@ -64,6 +75,7 @@ app.post("/register-account", async (req, res) => {
       email: req.body.email,
       password: req.body.password,
     };
+    console.log(`user a adicionar: ${user.json()}`)
 
     //let result = await collection.insertOne(users);
     collection.push(user)
@@ -71,6 +83,7 @@ app.post("/register-account", async (req, res) => {
       msg: "Sucesso ao criar registro.",
       //insertedId: result.insertedId, COLOCAR ISSO QUANDO FIZER O BD DE VERDADE
     });
+
   } catch (error) {
     console.error(error);
     res.status(500).send({
@@ -79,7 +92,8 @@ app.post("/register-account", async (req, res) => {
   }
 });
 
-app.post("/login-account", async (req, res) => {
+
+app.post("/login-account", async (req, res) => {  //vê se o login está correto (senha e user batendo)
   try {
     const user = findUserIndex(req.body.username)
     if (!user) {
@@ -103,7 +117,8 @@ app.post("/login-account", async (req, res) => {
   }
 })
 
-app.patch("/edit", async (req, res) => {
+
+app.patch("/edit", async (req, res) => {  //altera / edita user
   try {
     const id = req.body.id;
     const user = {
@@ -133,6 +148,7 @@ app.patch("/edit", async (req, res) => {
   }
 })
 
+
 app.listen(PORT, () => {
-    console.log("Server ouvindo na porta ", PORT);
+    console.log("Server ouvindo na porta", PORT);
 });

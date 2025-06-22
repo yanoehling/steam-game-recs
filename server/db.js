@@ -1,16 +1,27 @@
-MongoClient = require('mongodb').MongoClient
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://steamrosa:web123@steamrosa.y714tl8.mongodb.net/?retryWrites=true&w=majority&appName=SteamRosa";
 
-const URI = process.env.MONGODB_URI || ''; //ADICIONAR HTTP MONGO
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
-const client = new MongoClient(URI);
 
-try {
+async function run() {
+  try {
     await client.connect();
     console.log("Conectado ao MongoDB");
-} catch (err) {
+  } catch (err) {
     console.error(err);
+    }
 }
 
-let db = client.db('todoapp');
+run().catch(console.dir);
 
+
+let db = client.db('todoapp');
 export default db;
