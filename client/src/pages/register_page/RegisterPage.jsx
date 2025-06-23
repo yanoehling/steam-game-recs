@@ -50,13 +50,12 @@ export default function RegisterPage(){
             respostas.validade = false; 
             respostas.status = `${nome} não pode ser um espaço em branco.`
         } else {
-            const data = {username: texto}
-            const jsonData = JSON.stringify(data)
+            // Usando GET com query parameters
+            const url = `/check-user?username=${encodeURIComponent(texto)}`;
 
-            let data_register = await fetch('/check-user', {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: jsonData
+            let data_register = await fetch(url, {
+                method: "GET",
+                headers: {'Content-Type': 'application/json'}
             })
             const serverResponse = await data_register.json()
             if (!serverResponse.userExists) {

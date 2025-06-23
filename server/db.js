@@ -1,7 +1,6 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://steamrosa:web123@steamrosa.y714tl8.mongodb.net/?retryWrites=true&w=majority&appName=SteamRosa";
+import { MongoClient, ServerApiVersion } from 'mongodb';
+const uri = "mongodb+srv://steamrosa:web123@steamrosa.y714tl8.mongodb.net/todoapp?retryWrites=true&w=majority&appName=SteamRosa";
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -11,17 +10,89 @@ const client = new MongoClient(uri, {
 });
 
 
+
 async function run() {
   try {
     await client.connect();
-    console.log("Conectado ao MongoDB");
+    console.log("Conectado ao MongoDB (Atlas)");
   } catch (err) {
-    console.error(err);
-    }
+    console.error("Erro ao conectar Mongo:", err.message);
+  }
 }
+
+
+
 
 run().catch(console.dir);
 
-
 let db = client.db('todoapp');
-export default db;
+const usersCollection = db.collection('users');
+const gamesCollection = db.collection('games');
+
+// insere novo user
+async function addUser(data) {
+  try {
+    const result = await usersCollection.insertOne(data);
+    return { success: true, insertedId: result.insertedId };
+  } catch (err) {
+    console.error('Erro ao adicionar user:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+// acha user por username
+async function findUserByUsername(username) {
+  try {
+    const user = await usersCollection.findOne({username: username});
+    return user;
+  } catch (err) {
+    console.error('Erro ao procurar user:', err);
+    return null;
+  }
+}
+
+// atualiza user
+async function updateUser(username, data) {
+  try {
+    const result = await usersCollection.updateOne(
+      {username: username},
+      {$set: data}
+    );
+    return { success: true, modifiedCount: result.modifiedCount };
+  } catch (err) {
+    console.error('Erro ao dar update no user:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+// deleta user
+async function deleteUser(username) {
+  try {
+    const result = await usersCollection.deleteOne({ username: username });
+    return {success: true, deletedCount: result.deletedCount};
+  } catch (err) {
+    console.error('Erro ao deletar user:', err);
+    return {success: false, error: err.message};
+  }
+}
+
+// pega todos os users
+async function getAllUsers() {
+  try {
+    const users = await usersCollection.find({}).toArray();
+    return users;
+  } catch (err) {
+    console.error('Erro ao pegar todos os users:', err);
+    return [];
+  }
+}
+
+// exporta as funcoes
+export {
+  db,
+  addUser,
+  findUserByUsername,
+  updateUser,
+  deleteUser,
+  getAllUsers
+};

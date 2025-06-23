@@ -16,13 +16,14 @@ function LoginPage(){
 
     async function fazerLogin() {
         if (valores.username && valores.password) {
-            const data = {username: valores.username, password: valores.password}
-            const jsonData = JSON.stringify(data)
-            
+            const data = {
+                username: valores.username,
+                password: valores.password
+            };
             let data_register = await fetch('/login-account', {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
-                body: jsonData
+                body: JSON.stringify(data)
             })
 
             const serverResponse = await data_register.json();
@@ -32,7 +33,7 @@ function LoginPage(){
             } else {
                 navigate('/');
             }
-                }
+        }
     }
 
     return (

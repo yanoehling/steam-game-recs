@@ -65,13 +65,12 @@ export default function EditProfilePage(user){
             respostas.validade = false; 
             respostas.status = `${nome} não pode ser um espaço em branco.`
         } else {
-            const data = {username: texto}
-            const jsonData = JSON.stringify(data)
+            // Usando GET com query parameters
+            const url = `/check-user?username=${encodeURIComponent(texto)}`;
 
-            let data_register = await fetch('/check-user', {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: jsonData
+            let data_register = await fetch(url, {
+                method: "GET",
+                headers: {'Content-Type': 'application/json'}
             })
             const serverResponse = await data_register.json()
             if (!serverResponse.userExists) {
@@ -143,10 +142,17 @@ export default function EditProfilePage(user){
             } 
         }
         if (validezes === 5) {
-            const data = {id: userId, name: valores[0], username: valores[1], birthday: valores[2], email: valores[3], password: valores[4]}
+            const data = {
+                id: userId,
+                name: valores[0],
+                username: valores[1],
+                birthday: valores[2], 
+                email: valores[3], 
+                password: valores[4]
+            }
             const jsonData = JSON.stringify(data)
             
-            let data_register = await fetch('/edit-account', {
+            let data_register = await fetch('/edit', {
                 method: "PATCH",
                 headers: {'Content-Type': 'application/json'},
                 body: jsonData
@@ -166,7 +172,7 @@ export default function EditProfilePage(user){
                 <NavBar />
             </header>
             <section className="login-menu gray-color flex-container-column">
-                <h2 style={{marginBottom: '20px'}}>Faça sua Conta</h2>
+                <h2 style={{marginBottom: '20px'}}>Editar Perfil</h2>
                 <form action="" className="asap">
                     <Campo index={0} label='Escreva seu nome completo:' tipo="text" name="Nome" onblur={validaEmBranco} valor={valores[0]}/>
                     <Campo index={1} label='Escreva um nome para seu usuário:' tipo='text' name='Usuário' onblur={validaUser} valor={valores[1]}/>
