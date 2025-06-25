@@ -19,7 +19,7 @@ function Home() {
     <main className="flex-container-column roboto">
       <header className="flex-container-column">
         <NavBar />
-        <Slider ></Slider>
+        <Slider showcase_game_info={showcaseInfo} is_anchours={true}></Slider>
       </header>
       <section className="game-list-horizontal">
         <h2>Jogos do Momento</h2>
