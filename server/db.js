@@ -1,5 +1,5 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
-const uri = "mongodb+srv://steamrosa:web123@steamrosa.y714tl8.mongodb.net/todoapp?retryWrites=true&w=majority&appName=SteamRosa";
+const uri = "mongodb+srv://steamrosa:web123@steamrosa.y714tl8.mongodb.net/?retryWrites=true&w=majority&appName=SteamRosa";
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -9,8 +9,6 @@ const client = new MongoClient(uri, {
   }
 });
 
-
-
 async function run() {
   try {
     await client.connect();
@@ -19,9 +17,6 @@ async function run() {
     console.error("Erro ao conectar Mongo:", err.message);
   }
 }
-
-
-
 
 run().catch(console.dir);
 
@@ -46,7 +41,7 @@ async function findUserByUsername(username) {
     const user = await usersCollection.findOne({username: username});
     return user;
   } catch (err) {
-    console.error('Erro ao procurar user:', err);
+    console.error(`Erro ao procurar o user '${username}':`, err);
     return null;
   }
 }
@@ -58,9 +53,12 @@ async function updateUser(username, data) {
       {username: username},
       {$set: data}
     );
-    return { success: true, modifiedCount: result.modifiedCount };
+    if (result.deletedCount > 0){
+      return {success: true, deletedCount: result.deletedCount};
+    } else {throw new Error(`User '${username}' não encontrado`)
+    }
   } catch (err) {
-    console.error('Erro ao dar update no user:', err);
+    console.error(`Erro ao dar update no user '${username}':`, err);
     return { success: false, error: err.message };
   }
 }
@@ -69,7 +67,10 @@ async function updateUser(username, data) {
 async function deleteUser(username) {
   try {
     const result = await usersCollection.deleteOne({ username: username });
-    return {success: true, deletedCount: result.deletedCount};
+    if (result.deletedCount > 0){
+      return {success: true, deletedCount: result.deletedCount};
+    } else {throw new Error(`User '${username}' não encontrado`)
+    }
   } catch (err) {
     console.error('Erro ao deletar user:', err);
     return {success: false, error: err.message};

@@ -28,8 +28,8 @@ function LoginPage(){
 
             const serverResponse = await data_register.json();
             let statusLogin = document.getElementById("statusLogin");
-            if (!serverResponse.userExists) {
-                statusLogin.innerHTML = "Nome ou senha incorretos.";
+            if (!serverResponse.accountExists) {
+                statusLogin.innerHTML = "Username ou senha incorretos.";
             } else {
                 navigate('/');
             }

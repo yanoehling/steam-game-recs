@@ -143,7 +143,8 @@ export default function EditProfilePage(user){
         }
         if (validezes === 5) {
             const data = {
-                id: userId,
+                //old_username: old_username, 
+                // ADICIONAR ESQUEMA DE PEGAR O USERNAME DE ANTES PARA PROCURAR NA DB
                 name: valores[0],
                 username: valores[1],
                 birthday: valores[2], 
