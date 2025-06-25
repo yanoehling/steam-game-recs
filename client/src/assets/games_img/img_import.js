@@ -14,6 +14,13 @@ export const gamesInfos = [
 ] ;
 
 export const imagesPromote = [
-    {id:"undertale", img:[{img: undertale_img, nome: "Undertale_Image_1"}, {img: undertale_img2, nome: "Undertale_Image_2"}, {img: undertale_img3, nome: "Undertale_Image_3"}]}
+    {name:"Undertale", 
+        img:[{img: undertale_img, nome: "Undertale_Image_1"}, {img: undertale_img2, nome: "Undertale_Image_2"}, {img: undertale_img3, nome: "Undertale_Image_3"}], 
+        review: "9,2/10", 
+        description:"Undertale é um role-play game que utiliza uma perspectiva de cima para baixo. No jogo, o jogador controla uma criança e cumpre objetivos para avançar na história. Os jogadores exploram um mundo subterrâneo repleto de cidades e cavernas, e precisam resolver diversos quebra-cabeças em sua jornada",
+        dev: "tobyfox",
+        category: ["Trilha Sonora Boa", "RPG", "Boa Trama", "Você Decide"],
+        price: 19.99
+    }
 ]
 

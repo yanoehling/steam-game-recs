@@ -9,7 +9,7 @@ import undertaleBanner from './Undertale_banner.png';
 import theLastOfUsBanner from './The_Last_Of_Us_Banner.png';
 
 const showcaseInfo = [
-  {id:1, img:undertaleBanner, href:'/game', name:'Undertale Banner'},
+  {id:1, img:undertaleBanner, href:`/game?title=undertale`, name:'Undertale Banner'},
   {id:2, img:hollowKnightBanner, href:'/game', name:'Hollow Knight Banner'},
   {id:3, img:theLastOfUsBanner, href:'/game', name:'The Last Of Us Banner'}
 ]
@@ -19,7 +19,7 @@ function Home() {
     <main className="flex-container-column roboto">
       <header className="flex-container-column">
         <NavBar />
-        <Slider showcase_game_info={showcaseInfo} is_anchours={true}></Slider>
+        <Slider showcase_game_info={showcaseInfo} is_anchours={true} qt="2"></Slider>
       </header>
       <section className="game-list-horizontal">
         <h2>Jogos do Momento</h2>

@@ -18,18 +18,17 @@ function GamePage(){
 
                 {/* Descrição, nota do jogo */}
                 <div className="description_section gray-color">
-                    <h1>Undertale</h1>
-                    <p><b>Nota:</b> 9,2/10</p>
+                    <h1>{imagesPromote[0].name}</h1>
+                    <p><b>Nota:</b>{imagesPromote[0].review}</p>
                     <div className="infos">
-                        <p>Undertale is a role-playing video game that uses a top-down perspective. In the game, the player controls a child and completes objectives in order to progress through the story. Players explore an underground world filled with towns and caves, and are required to solve numerous puzzles on their journey.</p>
-                        <p><b>Desenvolvedor: </b>tobyfox</p>
+                        <p>{imagesPromote[0].description}</p>
+                        <p><b>Desenvolvedor: </b>{imagesPromote[0].dev}</p>
                         <p>Categorias desse jogo:</p>
                         <div className="flex-container-column">
                             <ul className="categories">
-                                <li>Trilha Sonora Boa</li>
-                                <li>RPG</li>
-                                <li>Boa Trama</li>
-                                <li>Você decide</li>
+                                {imagesPromote[0].category.map((cat) => {
+                                    return <li>{cat}</li>
+                                })}
                             </ul>
                         </div>
                     </div>
@@ -37,8 +36,8 @@ function GamePage(){
             </section>
             <div>
                 <div className="price-div gray-color">
-                    <h2><b>Comprar Undertale</b></h2>
-                    <button>R$ 19,99</button>
+                    <h2><b>{`Comprar ${imagesPromote[0].name}`}</b></h2>
+                    <button>{`R$ ${imagesPromote[0].price}`}</button>
                 </div>
                 <div className="flex-container-row user_buttons">
                     <button className="gray-color">WishList</button>
