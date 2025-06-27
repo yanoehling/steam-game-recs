@@ -2,8 +2,23 @@
 import NavBar from "../../components/nav/nav"
 import {imagesPromote} from "../../assets/games_img/img_import"
 import Slider from "../../components/slider/Slider"
+import {useParams, useSearchParams} from 'react-router-dom'
+import { useEffect, useState} from "react"
+
+
+
+
 
 function GamePage(){
+    const [params] = useSearchParams()
+    const [game, setGame] = useState(null)
+    useEffect(() => {
+        fetch(`http://localhost:5000/games/${params.get('title')}`)
+        .then((response) => response.json())
+        .then((response) => setGame(response))
+        .catch((error) => console.log(error))
+    })
+
     return(
     <>
         <main className="flex-container-row">
