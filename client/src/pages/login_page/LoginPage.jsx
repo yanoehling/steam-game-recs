@@ -3,6 +3,7 @@ import NavBar from '../../components/nav/nav.jsx';
 import Campo from '../../components/campos/Campo.jsx';
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/footer/footer.jsx';
 
 function LoginPage(){
     const [valores, setValores] = React.useState({})
@@ -53,6 +54,7 @@ function LoginPage(){
                 </form>
                 <a href="/register">Crie uma Conta</a>
             </section>
+            <Footer />
         </main>
     )
 }

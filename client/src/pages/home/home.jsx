@@ -9,10 +9,11 @@ import undertaleBanner from './Undertale_banner.png';
 import theLastOfUsBanner from './The_Last_Of_Us_Banner.png';
 import FriendList from '../../components/friendList/friendList.jsx';
 import { useState } from 'react';
+import Footer from '../../components/footer/footer.jsx';
 
 
 const showcaseInfo = [
-  {id:1, img:undertaleBanner, href:`/game?title=undertale`, name:'Undertale Banner'},
+  {id:1, img:undertaleBanner, href:`/game?title=undertale&id=685d9527a24a6417a51e8d63`, name:'Undertale Banner'},
   {id:2, img:hollowKnightBanner, href:'/game', name:'Hollow Knight Banner'},
   {id:3, img:theLastOfUsBanner, href:'/game', name:'The Last Of Us Banner'}
 ]
@@ -45,6 +46,7 @@ function Home() {
           />)}
         </div>
       </section>
+      <Footer />
     </main>
     </>
   );

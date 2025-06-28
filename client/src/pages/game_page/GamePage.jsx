@@ -5,7 +5,7 @@ import Slider from "../../components/slider/Slider"
 import {useParams, useSearchParams} from 'react-router-dom'
 import { useEffect, useState} from "react"
 import FriendList from "../../components/friendList/friendList"
-
+import Footer from "../../components/footer/footer"
 
 
 
@@ -14,8 +14,9 @@ function GamePage(){
     const [params] = useSearchParams()
     const [game, setGame] = useState(null)
     const [showFriendList, setShowFriendList] = useState(false)
+    
     useEffect(() => {
-        fetch(`http://localhost:5000/games/${params.get('tit@le')}`)
+        fetch(`http://localhost:5000/games/${params.get('id')}`)
         .then((response) => response.json())
         .then((response) => setGame(response))
         .catch((error) => console.log(error))
@@ -23,7 +24,7 @@ function GamePage(){
 
     return(
     <>
-        <main   className="flex-container-row">
+        <main   className="flex-container-column">
             {showFriendList && (<FriendList onClose={()=> setShowFriendList(false)}/>)}
             <header>
                 <NavBar />
@@ -62,6 +63,7 @@ function GamePage(){
                     <button className="gray-color" onClick={()=> setShowFriendList(true)}>Recomendar</button>
                 </div>
             </div>
+            <Footer />
         </main>
     </>
 )}

@@ -31,6 +31,7 @@ nav{
   align-items: center;
   justify-content: center;
   height: 100%;
+  flex-direction: row;
   gap: 40px;
 }
 
@@ -40,6 +41,7 @@ nav{
   justify-content: center;
   height: 100%;
   flex-direction: column;
+  gap: 40px
 }
 
 nav a{
@@ -51,6 +53,7 @@ nav a:hover{
   opacity: 0.8;
   text-decoration:underline;
 }
+
 
 nav div{
   margin: 0 30px 0 30px;
@@ -143,6 +146,10 @@ input + button{
   margin-top: 20px;
 }
 
+button{
+  cursor: pointer;
+}
+
 button:hover{
   opacity: 0.8;
 }
@@ -209,7 +216,6 @@ main{
   display: flex;
   flex-direction: column;
   gap: 150px;
-  margin-bottom: 100px;
   height: 100;
 }
 
@@ -346,9 +352,9 @@ a{
 .friend-div{
   background-color: rgb(37, 37, 37);
   width: 320px; 
-  border-radius: 6px; 
-  max-height: 200px; 
-  padding: 15px 0 0 0; 
+  height: max-content;
+  border-radius: 6px;  
+  padding: 15px 0 40px 0; 
   margin: 0px;
   z-index: 4;
   opacity: 1.0;
@@ -383,14 +389,14 @@ a{
   gap: 20px;
   padding-top: 20px;
 }
-.friends button{
+.friends button, .friends p{
   width: 280px;
   border: 1px solid rgb(46, 43, 43);
   text-decoration: none;
   background-color: rgb(32, 31, 31);
   padding: 5px 0 5px 0;
-  cursor: pointer;
 }
+
 
 .options-friend{
   display: flex;
@@ -437,3 +443,34 @@ a{
   opacity: 0.8;
   background-color: rgb(51, 51, 51);
 }
+
+.search-friend{
+  gap: 8px !important;
+  border-bottom: 1px solid rgb(85, 80, 80);
+  padding: 10px 0 10px 0;
+  width: 100%;
+  position:relative;
+}
+
+.search-friend form{
+  width: 80%;
+  align-items: center;
+}
+.search-friend button{
+  border: none;
+  background-color: #4D4242;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+footer{
+  margin-top: 100px;
+  position: relative;
+  bottom: 100%;
+  padding: 20px 20px 10px 20px;
+  background-color: rgb(32, 31, 31);
+  width: 97.5%;
+  border-top: 1px solid rgb(107, 104, 104)
+
+}
+
