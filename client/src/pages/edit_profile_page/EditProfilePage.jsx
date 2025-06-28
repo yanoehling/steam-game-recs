@@ -141,7 +141,7 @@ export default function EditProfilePage(user){
         if (validezes === 5) {
             console.log("userobjectId:", userObjectId)
             const data = {
-                object_id: userObjectId, 
+                objectId: userObjectId, 
                 name: valores[0],
                 username: valores[1],
                 birthday: valores[2], 

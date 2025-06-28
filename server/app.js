@@ -169,7 +169,7 @@ app.post("/login-account", async (req, res) => {  //vê se senha e user correspo
 
 app.patch("/edit-account", async (req, res) => {  //altera  user no db
   try {
-    const {object_id, username, name, birthday, email, password } = req.body;
+    const {objectId, username, name, birthday, email, password } = req.body;
     
     const newdata = {
       username: username,
@@ -179,7 +179,7 @@ app.patch("/edit-account", async (req, res) => {  //altera  user no db
       password: password
     };
 
-    const result = await updateUser(object_id, newdata);
+    const result = await updateUser(objectId, newdata);
     
     if (result.success && result.modifiedCount > 0) {
       res.status(200).send({
@@ -252,34 +252,31 @@ app.get("/users", async (req, res) => {
 //adiciona amizade no o user que fez o pedido de amizade e no o amigo desejado
 app.patch("/add-friend", async (req, res) => {  
   try {
-    const {user_id, friend_id} = req.body;
-    const user = await findUserById(user_id);
-    const friend = await findUserById(friend_id)
+    const {userId, friendId} = req.body;
+    const user = await findUserById(userId);
+    const friend = await findUserById(friendId)
     
-    if (user & friend){
-      const already_added = user.friends.find(f => f.friendId === friend_id)
+    if (user && friend){
+      const already_added = user.friends.find(f => f.friendId === friendId)
       if (already_added){
         res.status(400).send({
           msg: "Falha ao adicionar amigo. Amigo já adicionado."
         });
 
       } else {
-        const user_new_friends = {
-          friends: user.friends.push({
-            friendId: friend_id, 
-            recommendations: []
-          })
-        }; 
-        const friend_new_friends = {
-          friends: friend.friends.push({
-            friendId: user_id, 
-            recommendations: []
-          })
-        }; 
-        const user_result = await updateUser(user_id, user_new_friends);
+        user.friends.push({ 
+          friendId: friendId, 
+          friendUsername: friend.username, 
+          recommendations: [] })
+        const user_result = await updateUser(userId, { friends: user.friends });
         
         if (user_result.success && user_result.modifiedCount > 0) {
-          const friend_result = await updateUser(friend_id, friend_new_friends);
+          friend.friends.push({ 
+            friendId: userId, 
+            friendUsername: user.username, 
+            recommendations: [] 
+          })
+          const friend_result = await updateUser(friendId, { friends: friend.friends });
 
           if (friend_result.success && friend_result.modifiedCount > 0) {
             res.status(200).send({
@@ -288,12 +285,12 @@ app.patch("/add-friend", async (req, res) => {
           } else {
             res.status(400).send({
               msg: "Falha ao adicionar amizade no amigo. Amizade adicionada apenas para o user que a pediu.",
-              err: result.error
+              err: friend_result.error
             });
           }
         } else {
           res.status(400).send({
-            msg: "Falha ao adicionar amizade."
+            msg: "Falha ao adicionar amizade.",
           });
         }
       }
@@ -315,33 +312,32 @@ app.patch("/add-friend", async (req, res) => {
 //remove amizade no o user que fez o pedido de remoção e no o ex-amigo desejado
 app.patch("/delete-friend", async (req, res) => {  
   try {
-    const {user_id, friend_id} = req.body;
-    const user = findUserById(user_id);
-    const friend = findUserById(friend_id);
+    const {userId, friendId} = req.body;
+    const user = await findUserById(userId);
+    const friend = await findUserById(friendId);
     
-    if (user & friend){
-      const finded = user.friends.find(f => f.friendId === friend_id)
+    if (user && friend){
+      console.log("friends:", user.friends)
+      const finded = user.friends.find(f => f.friendId === friendId)
+      
       if (!finded){
         res.status(400).send({
           msg: "Falha ao remover amigo. Amigo não encontrado nos amigos adicionados."
         });
       }
       // cria um novo array sem o amigo que se quer remover
-      const user_new_friends = user.friends.splice(
-        user.friends.findIndex(item => item.friendId === friend_id), 1)
-      const friend_new_friends = friend.friends.splice(
-        friend.friends.findIndex(item => item.friendId === user_id), 1)
-
-      const updated_u_data = {
-        friends: user_new_friends
-      }; 
-      const user_result = await updateUser(user_id, updated_u_data);
+      console.log("u friends:",  user.friends)
+      user.friends.splice(user.friends.findIndex(item => item.friendId === friendId), 1)
+      console.log("u new friends:",  user.friends)
+      const updated_u_data = { friends: user.friends }; 
+      const user_result = await updateUser(userId, updated_u_data);
 
       if (user_result.success && user_result.modifiedCount > 0) {
-        const updated_f_data = {
-          friends: friend_new_friends
-        }; 
-        const friend_result = await updateUser(friend_id, updated_f_data);
+        console.log("f friends:",  friend.friends)
+        friend.friends.splice(friend.friends.findIndex(item => item.friendId === userId), 1)
+        console.log("f new friends:",  friend.friends)
+        const updated_f_data = { friends: friend.friends }; 
+        const friend_result = await updateUser(friendId, updated_f_data);
 
         if (friend_result.success && friend_result.modifiedCount > 0) {
           res.status(200).send({
@@ -350,7 +346,7 @@ app.patch("/delete-friend", async (req, res) => {
         } else {
           res.status(400).send({
             msg: "Falha ao remover amizade no amigo. Amizade removida apenas para o user que pediu.",
-            err: result.error
+            err: friend_result.error
           });
         }
       } else {
@@ -399,12 +395,12 @@ app.get("/games", async (req, res) => {
 
 app.get("/get-game", async (req, res) => {  //busca dados completos do game no db
   try {
-    const { game_id } = req.query;
-    const game = await findGameById(game_id);
+    const { gameId } = req.query;
+    const game = await findGameById(gameId);
     
     if (!game) {
       res.status(404).send({
-        msg: "Game não encontrado."
+        msg: "Game não encontrado com este ID."
       });
     } else {
       res.status(200).send([
@@ -430,8 +426,9 @@ app.get("/get-game", async (req, res) => {  //busca dados completos do game no d
 // envia recomendação para o amigo desejado
 app.patch("/add-recommendation", async (req, res) => {  
   try {
-    const {sender_id, receiver_id, game_id} = req.body;
-    const friend_to_receive = await findUserById(receiver_id);
+    const {senderId, receiverId, gameId} = req.body;
+    const friend_to_receive = await findUserById(receiverId);
+    const game = await findGameById(gameId)
     
     if (!friend_to_receive){
       res.status(400).send({
@@ -439,19 +436,23 @@ app.patch("/add-recommendation", async (req, res) => {
       });
     } else {
       const friends_array = friend_to_receive.friends;
-      const sender = friends_array.find(f => f.friendId === sender_id);
+      const sender = friends_array.find(f => f.friendId === senderId);
       if (!sender){
         res.status(400).send({
           msg: "Falha ao enviar recomendação. Amizade ainda não estabelecida."
         });
+      } else if (!game){
+        res.status(400).send({
+          msg: "Falha ao enviar recomendação. Game não encontrado com este ID."
+        });
       } else {
-        sender.recommendations.push(game_id);
+        sender.recommendations.push(gameId);
         console.log("recomendação adicionada:", sender);
 
-        const result = await updateUser(receiver_id, { friends: friends_array });
+        const result = await updateUser(receiverId, { friends: friends_array });
         if (result.success && result.modifiedCount > 0) {
           res.status(200).send({
-            msg: "Sucesso ao enviar recomendação."
+            msg: `Sucesso ao enviar recomendação: ${gameId}`
           });
         } else {
           res.status(400).send({
@@ -464,7 +465,7 @@ app.patch("/add-recommendation", async (req, res) => {
   } catch(err) {
     console.error(err);
     res.status(500).send({
-      msg: "Falha ao adicionar amizade.",
+      msg: "Falha ao enviar recomendação.",
       err: err
     });
   }
@@ -474,8 +475,8 @@ app.patch("/add-recommendation", async (req, res) => {
 // remove recomendação do amigo
 app.patch("/delete-recommendation", async (req, res) => {  
   try {
-    const {user_id, friend_id, game_id} = req.body;
-    const user = await findUserById(user_id);
+    const {userId, toDeleteId, gameId} = req.body;
+    const user = await findUserById(userId);
     
     if (!user){
       res.status(400).send({
@@ -483,23 +484,21 @@ app.patch("/delete-recommendation", async (req, res) => {
       });
     } else {
       const friends_array = user.friends;
-      const friend_to_remove = friends_array.find(f => f.friendId === friend_id);
+      const friend_to_remove = friends_array.find(f => f.friendId === toDeleteId);
       if (!friend_to_remove){
         res.status(400).send({
-          msg: "Amizade com id informado ainda foi não estabelecida."
+          msg: "Amizade com ID informado ainda foi não estabelecida."
         });
       } else {
-        friend_to_remove.recommendations.splice(friend_to_remove.recommendations.findIndex(game_id), 1);
-        console.log("recomendação removida:", friend_to_remove);
-
-        const result = await updateUser(receiver_id, { friends: friends_array });
+        friend_to_remove.recommendations = friend_to_remove.recommendations.filter(f => f !== gameId);
+        const result = await updateUser(userId, { friends: friends_array });
         if (result.success && result.modifiedCount > 0) {
           res.status(200).send({
-            msg: "Sucesso ao enviar recomendação."
+            msg: "Sucesso ao remover recomendação."
           });
         } else {
           res.status(400).send({
-          msg: "Falha ao enviar recomendação.",
+          msg: "Falha ao remover recomendação. Recomendação não encontrada.",
           err: result.error
         });
         }
@@ -508,7 +507,7 @@ app.patch("/delete-recommendation", async (req, res) => {
   } catch(err) {
     console.error(err);
     res.status(500).send({
-      msg: "Falha ao adicionar amizade.",
+      msg: "Falha ao remover recomendação.",
       err: err
     });
   }

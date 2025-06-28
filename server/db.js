@@ -1,4 +1,4 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
 const uri = "mongodb+srv://steamrosa:web123@steamrosa.y714tl8.mongodb.net/?retryWrites=true&w=majority&appName=SteamRosa";
 
 const client = new MongoClient(uri, {
@@ -49,7 +49,7 @@ async function findUserByUsername(username) {
 // acha user por id
 async function findUserById(object_id) {
   try {
-    const user = await usersCollection.findOne(object_id);
+    const user = await usersCollection.findOne({ _id: new ObjectId(object_id) });
     return user;
   } catch (err) {
     console.error(`Erro ao procurar o user '${object_id}' :`, err);
@@ -60,7 +60,7 @@ async function findUserById(object_id) {
 // acha game por id
 async function findGameById(object_id) {
   try {
-    const game = await gamesCollection.findOne(object_id);
+    const game = await gamesCollection.findOne({ _id: new ObjectId(object_id) });
     return game;
   } catch (err) {
     console.error(`Erro ao procurar o game '${object_id}' :`, err);
@@ -72,12 +72,12 @@ async function findGameById(object_id) {
 async function updateUser(user_id, data) {
   try {
     const result = await usersCollection.updateOne(
-      {_id: user_id},
+      {_id: new ObjectId(user_id)},
       {$set: data}
     );
-    if (result.deletedCount > 0){
-      return {success: true, deletedCount: result.deletedCount};
-    } else {throw new Error(`User '${user_id}' não encontrado`)
+    if (result.modifiedCount > 0){
+      return {success: true, modifiedCount: result.modifiedCount};
+    } else {throw new Error(`User não foi modificado`)
     }
   } catch (err) {
     console.error(`Erro ao dar update no user '${user_id}':`, err);
