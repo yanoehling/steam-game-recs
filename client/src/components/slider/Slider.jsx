@@ -1,5 +1,4 @@
 import '../../style/main.css';
-import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 let count = 0;
 let intervalId;

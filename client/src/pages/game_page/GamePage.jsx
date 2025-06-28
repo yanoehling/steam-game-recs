@@ -14,8 +14,9 @@ function GamePage(){
     const [params] = useSearchParams()
     const [game, setGame] = useState(null)
     const [showFriendList, setShowFriendList] = useState(false)
+    
     useEffect(() => {
-        fetch(`http://localhost:5000/games/${params.get('tit@le')}`)
+        fetch(`http://localhost:5000/games/${params.get('id')}`)
         .then((response) => response.json())
         .then((response) => setGame(response))
         .catch((error) => console.log(error))
@@ -23,7 +24,7 @@ function GamePage(){
 
     return(
     <>
-        <main   className="flex-container-row">
+        <main   className="flex-container-column">
             {showFriendList && (<FriendList onClose={()=> setShowFriendList(false)}/>)}
             <header>
                 <NavBar />
