@@ -472,7 +472,7 @@ app.patch("/add-recommendation", async (req, res) => {
 
 
 // remove recomendação do amigo
-app.patch("/remove-recommendation", async (req, res) => {  
+app.patch("/delete-recommendation", async (req, res) => {  
   try {
     const {user_id, friend_id, game_id} = req.body;
     const user = await findUserById(user_id);
@@ -513,6 +513,7 @@ app.patch("/remove-recommendation", async (req, res) => {
     });
   }
 })
+
 
 app.listen(PORT, () => {
     console.log("Server ouvindo na porta", PORT);
