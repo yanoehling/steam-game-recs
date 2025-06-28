@@ -4,6 +4,7 @@ import {imagesPromote} from "../../assets/games_img/img_import"
 import Slider from "../../components/slider/Slider"
 import {useParams, useSearchParams} from 'react-router-dom'
 import { useEffect, useState} from "react"
+import FriendList from "../../components/friendList/friendList"
 
 
 
@@ -12,8 +13,9 @@ import { useEffect, useState} from "react"
 function GamePage(){
     const [params] = useSearchParams()
     const [game, setGame] = useState(null)
+    const [showFriendList, setShowFriendList] = useState(false)
     useEffect(() => {
-        fetch(`http://localhost:5000/games/${params.get('title')}`)
+        fetch(`http://localhost:5000/games/${params.get('tit@le')}`)
         .then((response) => response.json())
         .then((response) => setGame(response))
         .catch((error) => console.log(error))
@@ -21,7 +23,8 @@ function GamePage(){
 
     return(
     <>
-        <main className="flex-container-row">
+        <main   className="flex-container-row">
+            {showFriendList && (<FriendList onClose={()=> setShowFriendList(false)}/>)}
             <header>
                 <NavBar />
             </header>
@@ -56,7 +59,7 @@ function GamePage(){
                 </div>
                 <div className="flex-container-row user_buttons">
                     <button className="gray-color">WishList</button>
-                    <button className="gray-color">Recomendar</button>
+                    <button className="gray-color" onClick={()=> setShowFriendList(true)}>Recomendar</button>
                 </div>
             </div>
         </main>

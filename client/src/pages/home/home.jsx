@@ -7,6 +7,9 @@ import NavBar from '../../components/nav/nav.jsx';
 import hollowKnightBanner from './Hollow_Knight_Banner.png';
 import undertaleBanner from './Undertale_banner.png';
 import theLastOfUsBanner from './The_Last_Of_Us_Banner.png';
+import FriendList from '../../components/friendList/friendList.jsx';
+import { useState } from 'react';
+
 
 const showcaseInfo = [
   {id:1, img:undertaleBanner, href:`/game?title=undertale`, name:'Undertale Banner'},
@@ -15,10 +18,20 @@ const showcaseInfo = [
 ]
 
 function Home() {
+  const [showFriendList, setShowFriendList] = useState(false)
+  const showFriends = () => {
+    setShowFriendList(true)
+
+  }
   return (
+    <>
+    
     <main className="flex-container-column roboto">
+      {showFriendList && (
+        <FriendList onClose={() => setShowFriendList(false)}/>
+      )}
       <header className="flex-container-column">
-        <NavBar />
+        <NavBar showFriends={showFriends}/>
         <Slider showcase_game_info={showcaseInfo} is_anchours={true} qt="2"></Slider>
       </header>
       <section className="game-list-horizontal">
@@ -33,7 +46,9 @@ function Home() {
         </div>
       </section>
     </main>
+    </>
   );
 }
 
 export default Home;
+

@@ -5,6 +5,9 @@ import spiderMan_Banner from "./Spider_Man_2_banner.png";
 import undertale_img from "./Undertale_img_1.jpg";
 import undertale_img2 from "./Undertale_img_2.jpg";
 import undertale_img3 from "./Undertale_img_3.jpg"
+import x_button from "./x_button.png"
+
+export {x_button}
 
 export const gamesInfos = [
     {id: 1, img: eldenRing_Banner, title: "Elden Ring", price: "R$274,50"},

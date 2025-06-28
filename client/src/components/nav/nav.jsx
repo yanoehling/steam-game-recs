@@ -1,6 +1,8 @@
 import LoginButton from "../login_button/login_button"
+import { useState } from "react"
 
-export default function NavBar(){
+export default function NavBar({ showFriends }){
+
     return(
         <>
             <nav className="gray-color">
@@ -8,7 +10,7 @@ export default function NavBar(){
                     <a href="/">LOGO</a>
                     <a href="#">Loja</a>
                     <a href="#">Suporte</a>
-                    <a href="">Conversa</a>
+                    <a onClick={showFriends}>Amigos</a>
                 </div>
                 <LoginButton />
             </nav>
