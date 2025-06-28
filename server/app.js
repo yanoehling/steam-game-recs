@@ -126,11 +126,6 @@ app.post("/register-account", async (req, res) => {   //registra novo user no db
 
 app.post("/login-account", async (req, res) => {  //vê se senha e user correspondem no db
   const secret = 'TRABALHO_YAN_PATRICK_RAIDEN_JULIO_WEB_2025_1';
-  const options = {
-    expiresIn: '1h' // expira em 1 hora
-  };
-
-  const token = jwt.sign(payload, secret, options);
 
   try {
     const { username, password } = req.body;
@@ -141,6 +136,11 @@ app.post("/login-account", async (req, res) => {  //vê se senha e user correspo
         accountExists: false,
       });
     } else if (user.password === password) {
+      const token = jwt.sign(user, secret, {
+        expiresIn: '1h' ,
+        username: user.username,
+      });
+
       res.status(200).send({
         accountExists: true,
         user: {
