@@ -45,20 +45,30 @@ async function findUserByUsername(username) {
     return null;
   }
 }
+// acha user por id
+async function findUserById(object_id) {
+  try {
+    const user = await usersCollection.findOne(object_id);
+    return user;
+  } catch (err) {
+    console.error(`Erro ao procurar o user '${object_id}' :`, err);
+    return null;
+  }
+}
 
 // atualiza user
-async function updateUser(username, data) {
+async function updateUser(user_id, data) {
   try {
     const result = await usersCollection.updateOne(
-      {username: username},
+      {_id: user_id},
       {$set: data}
     );
     if (result.deletedCount > 0){
       return {success: true, deletedCount: result.deletedCount};
-    } else {throw new Error(`User '${username}' não encontrado`)
+    } else {throw new Error(`User '${user_id}' não encontrado`)
     }
   } catch (err) {
-    console.error(`Erro ao dar update no user '${username}':`, err);
+    console.error(`Erro ao dar update no user '${user_id}':`, err);
     return { success: false, error: err.message };
   }
 }
@@ -93,6 +103,7 @@ export {
   db,
   addUser,
   findUserByUsername,
+  findUserById,
   updateUser,
   deleteUser,
   getAllUsers

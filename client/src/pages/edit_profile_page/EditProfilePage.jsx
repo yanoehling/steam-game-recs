@@ -10,7 +10,7 @@ export default function EditProfilePage(user){
     const [validez, setValidez] = React.useState(Array(5).fill(false))
     const [valores, setValores] = React.useState(Array(6).fill(''))
     const navigate = useNavigate();
-    const { userId } = useParams();
+    const { userObjectId } = useParams();
 
     async function getData(user) {
         const jsonData = JSON.stringify({username: user})
@@ -142,9 +142,9 @@ export default function EditProfilePage(user){
             } 
         }
         if (validezes === 5) {
+            console.log("userobjectId:", userObjectId)
             const data = {
-                //old_username: old_username, 
-                // ADICIONAR ESQUEMA DE PEGAR O USERNAME DE ANTES PARA PROCURAR NA DB
+                object_id: userObjectId, 
                 name: valores[0],
                 username: valores[1],
                 birthday: valores[2], 
@@ -153,7 +153,7 @@ export default function EditProfilePage(user){
             }
             const jsonData = JSON.stringify(data)
             
-            let data_register = await fetch('/edit', {
+            let data_register = await fetch('/edit-account', {
                 method: "PATCH",
                 headers: {'Content-Type': 'application/json'},
                 body: jsonData
@@ -165,7 +165,7 @@ export default function EditProfilePage(user){
         }
     }
 
-    getData(userId)
+    getData(userObjectId)
     //Return final
     return (
         <main className="flex-container-column roboto">

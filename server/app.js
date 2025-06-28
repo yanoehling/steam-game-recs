@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { 
   addUser,
   findUserByUsername,
+  findUserById,
   updateUser,
   deleteUser,
   getAllUsers
@@ -30,7 +31,6 @@ app.get("/check-user", async (req, res) => {  //checa se user existe no db
   try {
     const { username } = req.query;
     const user = await findUserByUsername(username);
-    console.log(`user a checar: ${user}`);
 
     if (!user) {
       res.status(200).send({
@@ -67,7 +67,8 @@ app.post("/get-user", async (req, res) => {  //busca dados completos do usuário
         user.username,
         user.birthday,
         user.email,
-        user.password
+        user.password,
+        user.friends
       ]);
     }
   } catch(err) {
@@ -94,6 +95,7 @@ app.post("/register-account", async (req, res) => {   //registra novo user no db
       birthday: req.body.birthday,
       email: req.body.email,
       password: req.body.password,
+      friends: []
     };
 
     const result = await addUser(data);
@@ -143,6 +145,7 @@ app.post("/login-account", async (req, res) => {  //vê se senha e user correspo
           username: user.username,
           email: user.email,
           birthday: user.birthday,
+          friends: user.friends,
         },
         jwt: token,
       });
@@ -154,25 +157,25 @@ app.post("/login-account", async (req, res) => {  //vê se senha e user correspo
   } catch(err) {
     console.error(err);
     res.status(500).send({
-      errmsg: "Falha ao fazer login.",
+      msg: "Falha ao fazer login.",
     });
   }
 })
 
 
-app.patch("/edit", async (req, res) => {  //altera / edita user no db
+app.patch("/edit-account", async (req, res) => {  //altera  user no db
   try {
-    const {old_username, username, name, birthday, email, password } = req.body;
+    const {object_id, username, name, birthday, email, password } = req.body;
     
     const newdata = {
       username: username,
       name: name,
       birthday: birthday,
       email: email,
-      password: password,
+      password: password
     };
 
-    const result = await updateUser(username, newdata);
+    const result = await updateUser(object_id, newdata);
     
     if (result.success && result.modifiedCount > 0) {
       res.status(200).send({
@@ -190,7 +193,7 @@ app.patch("/edit", async (req, res) => {  //altera / edita user no db
       msg: "Falha ao editar perfil.",
     });
   }
-})
+});
 
 // deleta user no db
 app.delete("/delete-user", async (req, res) => {
@@ -225,6 +228,7 @@ app.get("/users", async (req, res) => {
         username: user.username,
         email: user.email,
         birthday: user.birthday,
+        friends: user.friends
       }))
     });
   } catch(err) {
@@ -234,6 +238,99 @@ app.get("/users", async (req, res) => {
     });
   }
 });
+
+
+app.patch("/add-friend", async (req, res) => {  //altera / edita user no db
+  try {
+    const {user_id, friend_id} = req.body;
+    const user = await findUserById(user_id);
+    const friend = await findUserById(friend_id)
+    
+    if (user & friend){
+      const friend_ids_array = user.friends.map(f => f.friendId);
+      if (friend_ids_array.includes(friend_id)){
+        res.status(400).send({
+          msg: "Falha ao adicionar amigo. Amigo já adicionado.",
+        });
+
+      } else {
+        const new_friends = {
+          friends: user.friends.push({
+            friendId: friend_id, 
+            recommendations: []
+          })
+        }; 
+        const result = await updateUser(user_id, new_friends);
+        
+        if (result.success && result.modifiedCount > 0) {
+          res.status(200).send({
+            msg: "Sucesso ao adicionar amigo.",
+          });
+        } else {
+          res.status(400).send({
+            msg: "Falha ao adicionar amigo.",
+          });
+        }
+      }
+    } else { 
+      res.status(400).send({
+          msg: "Falha ao adicionar amigo. Usuário(s) não encontrado(s).",
+        });
+    }
+  } catch(err) {
+    console.error(err);
+    res.status(500).send({
+      msg: "Falha ao adicionar amigo.",
+    });
+  }
+})
+
+
+app.patch("/delete-friend", async (req, res) => {  //altera / edita user no db
+  try {
+    const {user_id, friend_id} = req.body;
+    const user = findUserById(user_id);
+    const friend = findUserById(friend_id);
+    
+    if (user & friend){
+      const friend_ids = user.friends.map(f => f.friendId);
+      if (friend_ids.includes(user_id) == false){
+        res.status(400).send({
+          msg: "Falha ao remover amigo. Amigo não encontrado nos amigos adicionados."
+        });
+      }
+      // cria um novo array sem o amigo que se quer remover
+      const new_friends = user.friends.splice(
+        user.friends.findIndex(item => item.friendId === friend_id), 1)
+      const updated_data = {
+        friends: new_friends
+      }; 
+      const result = await updateUser(user_id, updated_data);
+      
+      if (result.success && result.modifiedCount > 0) {
+        res.status(200).send({
+          msg: "Sucesso ao remover amigo."
+        });
+      } else {
+        res.status(400).send({
+          msg: "Falha ao remover amigo. Usuário não encontrado."
+        });
+      }
+    } else { 
+      res.status(400).send({
+          msg: "Falha ao remover amigo. Usuário(s) não encontrado(s)."
+        });
+    }
+  } catch(err) {
+    console.error(err);
+    res.status(500).send({
+      msg: "Falha ao remover amigo."
+    });
+  }
+})
+
+
+
 
 app.listen(PORT, () => {
     console.log("Server ouvindo na porta", PORT);
