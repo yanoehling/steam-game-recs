@@ -5,7 +5,7 @@ import Slider from "../../components/slider/Slider"
 import {useParams, useSearchParams} from 'react-router-dom'
 import { useEffect, useState} from "react"
 import FriendList from "../../components/friendList/friendList"
-
+import Footer from "../../components/footer/footer"
 
 
 
@@ -63,6 +63,7 @@ function GamePage(){
                     <button className="gray-color" onClick={()=> setShowFriendList(true)}>Recomendar</button>
                 </div>
             </div>
+            <Footer />
         </main>
     </>
 )}

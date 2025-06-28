@@ -5,6 +5,7 @@ import Campo from '../../components/campos/Campo'
 import CampoSenhas from '../../components/campos/CampoSenhas';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
+import Footer from '../../components/footer/footer.jsx';
 
 export default function EditProfilePage(user){
     const [validez, setValidez] = React.useState(Array(5).fill(false))
@@ -186,6 +187,7 @@ export default function EditProfilePage(user){
                     
                 </form>
             </section>
+            <Footer />
         </main>
     )
 }

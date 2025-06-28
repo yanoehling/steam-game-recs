@@ -9,6 +9,7 @@ import undertaleBanner from './Undertale_banner.png';
 import theLastOfUsBanner from './The_Last_Of_Us_Banner.png';
 import FriendList from '../../components/friendList/friendList.jsx';
 import { useState } from 'react';
+import Footer from '../../components/footer/footer.jsx';
 
 
 const showcaseInfo = [
@@ -45,6 +46,7 @@ function Home() {
           />)}
         </div>
       </section>
+      <Footer />
     </main>
     </>
   );

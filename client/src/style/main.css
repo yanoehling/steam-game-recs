@@ -216,7 +216,6 @@ main{
   display: flex;
   flex-direction: column;
   gap: 150px;
-  margin-bottom: 100px;
   height: 100;
 }
 
@@ -463,3 +462,15 @@ a{
   padding: 4px;
   border-radius: 5px;
 }
+
+footer{
+  margin-top: 100px;
+  position: relative;
+  bottom: 100%;
+  padding: 20px 20px 10px 20px;
+  background-color: rgb(32, 31, 31);
+  width: 97.5%;
+  border-top: 1px solid rgb(107, 104, 104)
+
+}
+
