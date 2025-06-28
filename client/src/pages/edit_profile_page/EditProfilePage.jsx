@@ -14,12 +14,8 @@ export default function EditProfilePage(user){
     const { userObjectId } = useParams();
 
     async function getData(user) {
-        const jsonData = JSON.stringify({username: user})
-        const profile_data = await fetch('/get-user', {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: jsonData
-        })
+        const profile_data = await fetch(`/get-user?username=${encodeURIComponent(user)}`, {method: "GET"});
+
         const serverResponse = await profile_data.json()
         if (serverResponse) {
             setValores(serverResponse)

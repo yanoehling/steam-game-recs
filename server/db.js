@@ -45,6 +45,7 @@ async function findUserByUsername(username) {
     return null;
   }
 }
+
 // acha user por id
 async function findUserById(object_id) {
   try {
@@ -52,6 +53,17 @@ async function findUserById(object_id) {
     return user;
   } catch (err) {
     console.error(`Erro ao procurar o user '${object_id}' :`, err);
+    return null;
+  }
+}
+
+// acha game por id
+async function findGameById(object_id) {
+  try {
+    const game = await gamesCollection.findOne(object_id);
+    return game;
+  } catch (err) {
+    console.error(`Erro ao procurar o game '${object_id}' :`, err);
     return null;
   }
 }
@@ -98,13 +110,27 @@ async function getAllUsers() {
   }
 }
 
+async function getAllGames() {
+  try {
+    const games = await gamesCollection.find({}).toArray();
+    return games;
+  } catch (err) {
+    console.error('Erro ao pegar todos os games:', err);
+    return [];
+  }
+}
+
+
+
 // exporta as funcoes
 export {
   db,
   addUser,
   findUserByUsername,
   findUserById,
+  findGameById,
   updateUser,
   deleteUser,
-  getAllUsers
+  getAllUsers,
+  getAllGames
 };
