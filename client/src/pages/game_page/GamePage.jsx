@@ -23,11 +23,12 @@ function GamePage(){
     })
 
     return(
+        
     <>
-        <main   className="flex-container-column">
+        <main className="gap_game">
             {showFriendList && (<FriendList onClose={()=> setShowFriendList(false)}/>)}
             <header>
-                <NavBar />
+                <NavBar showFriends={()=> setShowFriendList(true)}/>
             </header>
             <section className="flex-container-row game-promotion">
                 {/* imagens, vídeo do jogo */}
@@ -63,8 +64,8 @@ function GamePage(){
                     <button className="gray-color" onClick={()=> setShowFriendList(true)}>Recomendar</button>
                 </div>
             </div>
-            <Footer />
         </main>
+        <Footer />
     </>
 )}
 

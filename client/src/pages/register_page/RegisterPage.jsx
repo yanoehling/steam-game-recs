@@ -5,8 +5,10 @@ import Campo from '../../components/campos/Campo'
 import CampoSenhas from '../../components/campos/CampoSenhas';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer.jsx';
+import FriendList from '../../components/friendList/friendList.jsx';
 
 export default function RegisterPage(){
+    const [showFriendList, setShowFriendList] = useState(false)   
     const [validez, setValidez] = React.useState(Array(5).fill(false))
     const [valores, setValores] = React.useState(Array(6).fill(''))
     const navigate = useNavigate();
@@ -145,9 +147,13 @@ export default function RegisterPage(){
 
     //Return final
     return (
-        <main className="flex-container-column roboto">
+        <>
+        <main className="roboto">
+            {showFriendList && (
+                <FriendList onClose={() => setShowFriendList(false)}/>
+            )}
             <header>
-                <NavBar />
+                <NavBar showFriends={()=> setShowFriendList(true)}/>
             </header>
             <section className="login-menu gray-color flex-container-column">
                 <h2 style={{marginBottom: '20px'}}>Faça sua Conta</h2>
@@ -163,7 +169,8 @@ export default function RegisterPage(){
                     
                 </form>
             </section>
-            <Footer />
         </main>
+        <Footer />
+        </>
     )
 }

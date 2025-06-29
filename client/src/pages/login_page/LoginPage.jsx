@@ -4,8 +4,10 @@ import Campo from '../../components/campos/Campo.jsx';
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer.jsx';
+import FriendList from '../../components/friendList/friendList.jsx';
 
 function LoginPage(){
+    const [showFriendList, setShowFriendList] = useState(false)   
     const [valores, setValores] = React.useState({})
     const navigate = useNavigate();
 
@@ -38,9 +40,13 @@ function LoginPage(){
     }
 
     return (
-        <main className="flex-container-column roboto">
+        <>
+        <main className="roboto">
+            {showFriendList && (
+                <FriendList onClose={() => setShowFriendList(false)}/>
+            )}
             <header>
-                <NavBar />
+                <NavBar showFriends={()=> setShowFriendList(true)}/>
             </header>
             <section className="login-menu gray-color flex-container-column">
                 <h2 style={{marginBottom: '20px'}}>Faça o Login</h2>
@@ -54,8 +60,9 @@ function LoginPage(){
                 </form>
                 <a href="/register">Crie uma Conta</a>
             </section>
-            <Footer />
         </main>
+        <Footer />
+        </>
     )
 }
 

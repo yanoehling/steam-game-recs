@@ -27,7 +27,7 @@ function Home() {
   return (
     <>
     
-    <main className="flex-container-column roboto">
+    <main className="roboto">
       {showFriendList && (
         <FriendList onClose={() => setShowFriendList(false)}/>
       )}
@@ -46,8 +46,8 @@ function Home() {
           />)}
         </div>
       </section>
-      <Footer />
     </main>
+    <Footer />
     </>
   );
 }
