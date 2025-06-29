@@ -15,8 +15,8 @@ export class UsersController {
 
     @Get("check")
     @HttpCode(200)
-    checkUser(@Query() username: CheckUserDto) {
-        return this.usersService.checkUser(username.username)
+    checkUser(@Query() username: string) {
+        return this.usersService.checkUser(username)
     }
 
     @Get()
