@@ -11,8 +11,8 @@ import { AuthModule } from './auth/auth.module';
     UsersModule, 
     GamesModule,
     MongooseModule.forRoot(
-      'mongodb+srv://steamrosa:web123@steamrosa.y714tl8.mongodb.net/?retryWrites=true&w=majority&appName=SteamRosa'
-    ),
+      'mongodb+srv://steamrosa:web123@steamrosa.y714tl8.mongodb.net/todoapp?retryWrites=true&w=majority&appName=SteamRosa'
+    ),    
     AuthModule,
   ],
   controllers: [AppController],
