@@ -95,13 +95,3 @@ export class RemoveRecommendationDto {
 }
 
 
-export class LoginDto {
-  @IsString()
-  @IsNotEmpty()
-  username: string;
-
-  @IsString()
-  @IsNotEmpty()
-  password: string;
-}
-

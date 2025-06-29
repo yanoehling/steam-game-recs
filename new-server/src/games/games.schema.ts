@@ -25,4 +25,4 @@ export class Game {
 
 }
 
-export const UserSchema = SchemaFactory.createForClass(Game);
+export const GameSchema = SchemaFactory.createForClass(Game);
