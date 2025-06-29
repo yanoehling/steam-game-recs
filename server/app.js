@@ -405,6 +405,7 @@ app.get("/get-game", async (req, res) => {  //busca dados completos do game no d
     } else {
       res.status(200).send([
         game._id,
+        game.name,
         game.img,
         game.review,
         game.description,
