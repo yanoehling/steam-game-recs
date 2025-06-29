@@ -14,52 +14,45 @@ export class UsersService {
     ) {}
 
     async create(user: CreateUserDto) {
-        try {
-            const alreadyExistingUser = await this.usersCollection.findOne({ username: user.username }).exec()
-            
-            if (alreadyExistingUser) {
-                throw new BadRequestException("already existing user")
-            }
-            
-            const newUser = await this.usersCollection.create(user)
-            
-            if (newUser && newUser._id) {
-                return {
-                    msg: "user created successfully"
-                }
-            } else {
-                throw new InternalServerErrorException('could not create user account');
-            }
-        } catch (e) {
-            throw new InternalServerErrorException("could not create user account")
+        const alreadyExistingUser = await this.usersCollection.findOne({ username: user.username }).exec()
+        
+        if (alreadyExistingUser) {
+            throw new BadRequestException("already existing user")
         }
+        
+        const newUser = await this.usersCollection.create(user)
+        
+        if (newUser && newUser._id) {
+            return {
+                msg: "user created successfully"
+            }
+        } else {
+            throw new InternalServerErrorException('could not create user account');
+        }
+      
     }
 
     async update(userId: string, updatedUser: UpdateUserDto) {
-        try {
-            const alreadyExistingUser = await this.usersCollection.findById(userId).exec()
-            
-            if (!alreadyExistingUser) {
-                throw new NotFoundException("could not find user with this _id")
-            }
-            
-            const updatedUserAccount = await this.usersCollection.findByIdAndUpdate(
-                {
-                    id: userId,
-                },
-                updatedUser
-            )
+        const alreadyExistingUser = await this.usersCollection.findById(userId).exec()
+        
+        if (!alreadyExistingUser) {
+            throw new NotFoundException("could not find user with this _id")
+        }
+        
+        const updatedUserAccount = await this.usersCollection.findByIdAndUpdate(
+            {
+                id: userId,
+            },
+            updatedUser
+        )
 
-            
-            if (updatedUserAccount) {
-                return {
-                    msg: "user created successfully"
-                }
-            } else {
-                throw new InternalServerErrorException('could not update user account');
+        
+        if (updatedUserAccount) {
+            return {
+                msg: "user created successfully"
             }
-        } catch (e) {
-            throw new InternalServerErrorException("could not update user account")
+        } else {
+            throw new InternalServerErrorException('could not update user account');
         }
     }
 
