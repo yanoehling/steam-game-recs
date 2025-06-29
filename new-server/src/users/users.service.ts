@@ -2,7 +2,7 @@ import { BadRequestException, ForbiddenException, Injectable, InternalServerErro
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './users.schema';
-import { CreateUserDto, LoginDto, UpdateUserDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { Game, GameDocument } from 'src/games/games.schema';
 
@@ -11,56 +11,48 @@ export class UsersService {
     constructor(
         @InjectModel(User.name) private usersCollection: Model<UserDocument>,
         @InjectModel(Game.name) private gamesCollection: Model<GameDocument>,
-        private jwtService: JwtService,
     ) {}
 
     async create(user: CreateUserDto) {
-        try {
-            const alreadyExistingUser = await this.usersCollection.findOne({ username: user.username }).exec()
-            
-            if (alreadyExistingUser) {
-                throw new BadRequestException("already existing user")
-            }
-            
-            const newUser = await this.usersCollection.create(user)
-            
-            if (newUser && newUser._id) {
-                return {
-                    msg: "user created successfully"
-                }
-            } else {
-                throw new InternalServerErrorException('could not create user account');
-            }
-        } catch (e) {
-            throw new InternalServerErrorException("could not create user account")
+        const alreadyExistingUser = await this.usersCollection.findOne({ username: user.username }).exec()
+        
+        if (alreadyExistingUser) {
+            throw new BadRequestException("already existing user")
         }
+        
+        const newUser = await this.usersCollection.create(user)
+        
+        if (newUser && newUser._id) {
+            return {
+                msg: "user created successfully"
+            }
+        } else {
+            throw new InternalServerErrorException('could not create user account');
+        }
+      
     }
 
     async update(userId: string, updatedUser: UpdateUserDto) {
-        try {
-            const alreadyExistingUser = await this.usersCollection.findById(userId).exec()
-            
-            if (!alreadyExistingUser) {
-                throw new NotFoundException("could not find user with this _id")
-            }
-            
-            const updatedUserAccount = await this.usersCollection.findByIdAndUpdate(
-                {
-                    id: userId,
-                },
-                updatedUser
-            )
+        const alreadyExistingUser = await this.usersCollection.findById(userId).exec()
+        
+        if (!alreadyExistingUser) {
+            throw new NotFoundException("could not find user with this _id")
+        }
+        
+        const updatedUserAccount = await this.usersCollection.findByIdAndUpdate(
+            {
+                id: userId,
+            },
+            updatedUser
+        )
 
-            
-            if (updatedUserAccount) {
-                return {
-                    msg: "user created successfully"
-                }
-            } else {
-                throw new InternalServerErrorException('could not update user account');
+        
+        if (updatedUserAccount) {
+            return {
+                msg: "user created successfully"
             }
-        } catch (e) {
-            throw new InternalServerErrorException("could not update user account")
+        } else {
+            throw new InternalServerErrorException('could not update user account');
         }
     }
 
@@ -92,23 +84,6 @@ export class UsersService {
         const users = await this.usersCollection.find().exec()
 
         return users
-    }
-
-    async login(login: LoginDto) {
-        const checkIfUserLoginIsValid = await this.usersCollection.findOne({
-            username: login.username,
-            password: login.password,
-        })
-
-        if (!checkIfUserLoginIsValid) {
-            throw new NotFoundException("user with these credentials does not exist")
-        }
-
-        return {
-            access_token: this.jwtService.sign({
-                _id: checkIfUserLoginIsValid._id,
-            }),
-        }
     }
 
     async delete(id: string) {

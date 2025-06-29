@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AddFriendDto, AddRecommendationDto, CheckUserDto, CreateUserDto, GetFriendDto, GetUserByIdDto, LoginDto, RemoveFriendDto, RemoveRecommendationDto, UpdateUserDto } from './user.dto';
+import { AddFriendDto, AddRecommendationDto, CheckUserDto, CreateUserDto, GetFriendDto, GetUserByIdDto, RemoveFriendDto, RemoveRecommendationDto, UpdateUserDto } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
@@ -36,12 +36,6 @@ export class UsersController {
     @HttpCode(200)
     updateUser(@Req() req, @Body() updatedUser: UpdateUserDto) {
         return this.usersService.update(req.user._id, updatedUser)
-    }
-
-    @Post("login")
-    @HttpCode(200)
-    login(@Body() login: LoginDto) {
-        return this.usersService.login(login)
     }
 
     @UseGuards(AuthGuard('jwt'))

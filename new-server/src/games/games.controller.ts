@@ -22,7 +22,7 @@ export class GamesController {
 
     @Get(":id")
     @HttpCode(200)
-    async getGame(@Param("id") id: GetGameDto) {
-        return this.gamesService.getGame(id.id)
+    async getGame(@Param("id") id: string) {
+        return this.gamesService.getGame(id)
     }   
 }
