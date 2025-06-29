@@ -16,15 +16,16 @@ function GamePage(){
     const [showFriendList, setShowFriendList] = useState(false)
     
     useEffect(() => {
-        fetch(`http://localhost:5000/get-game/${params.get('id')}`)
+        fetch(`http://localhost:5000/get-game?gameId=${params.get('id')}`)
         .then((response) => response.json())
         .then((response) => setGame(response))
         .catch((error) => console.log(error))
-    })
-
+    }, [params])
     return(
-        
     <>
+    {game && (
+        <>
+        {console.log(game)}
         <main className="gap_game">
             {showFriendList && (<FriendList onClose={()=> setShowFriendList(false)}/>)}
             <header>
@@ -38,15 +39,15 @@ function GamePage(){
 
                 {/* Descrição, nota do jogo */}
                 <div className="description_section gray-color">
-                    <h1>{imagesPromote[0].name}</h1>
-                    <p><b>Nota:</b>{imagesPromote[0].review}</p>
+                    <h1>{params.get('title')}</h1>
+                    <p><b>Nota: </b>{game[2]}</p>
                     <div className="infos">
-                        <p>{imagesPromote[0].description}</p>
-                        <p><b>Desenvolvedor: </b>{imagesPromote[0].dev}</p>
+                        <p>{game[3]}</p>
+                        <p><b>Desenvolvedor: </b>{game[4]}</p>
                         <p>Categorias desse jogo:</p>
-                        <div className="flex-container-column">
+                        <div className="flex-container-column categories-container">
                             <ul className="categories">
-                                {imagesPromote[0].category.map((cat) => {
+                                {game[5].map((cat) => {
                                     return <li>{cat}</li>
                                 })}
                             </ul>
@@ -56,8 +57,8 @@ function GamePage(){
             </section>
             <div>
                 <div className="price-div gray-color">
-                    <h2><b>{`Comprar ${imagesPromote[0].name}`}</b></h2>
-                    <button>{`R$ ${imagesPromote[0].price}`}</button>
+                    <h2><b>{`Comprar ${params.get('title')}`}</b></h2>
+                    <button>{`R$ ${game[6]}`}</button>
                 </div>
                 <div className="flex-container-row user_buttons">
                     <button className="gray-color">WishList</button>
@@ -68,5 +69,8 @@ function GamePage(){
         <Footer />
     </>
 )}
+</>
+)
+}
 
 export default GamePage
