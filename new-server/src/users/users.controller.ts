@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AddFriendDto, AddRecommendationDto, CheckUserDto, CreateUserDto, GetFriendDto, GetUserByIdDto, RemoveFriendDto, RemoveRecommendationDto, UpdateUserDto } from './user.dto';
+import { CheckUserDto, CreateUserDto, GetUserByIdDto, UpdateUserDto } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
@@ -48,28 +48,28 @@ export class UsersController {
     @UseGuards(AuthGuard('jwt'))
     @Post('add/friend/:friendId')
     @HttpCode(201)
-    addFriend(@Req() req, @Param("friendId") friendId: AddFriendDto) {
-        return this.usersService.addFriend(req.user._id, friendId.friendId)
+    addFriend(@Req() req, @Param("friendId") friendId: string) {
+        return this.usersService.addFriend(req.user._id, friendId)
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Delete("remove/friend/:friendId")
     @HttpCode(200)
-    removeFriend(@Req() req, @Param("friendId") friendId: RemoveFriendDto) {
-        return this.usersService.removeFriend(req.user._id, friendId.friendId)
+    removeFriend(@Req() req, @Param("friendId") friendId: string) {
+        return this.usersService.removeFriend(req.user._id, friendId)
     }
 
     @UseGuards(AuthGuard("jwt"))
     @Post("add/recommendation/:friendId")
     @HttpCode(201)
-    addRecommendation(@Req() req, @Param("friendId") friendId: GetFriendDto, @Query() recommendation: string) {
-        return this.usersService.addRecommendation(req.user._id, friendId.friendId, recommendation)
+    addRecommendation(@Req() req, @Param("friendId") friendId: string, @Query() recommendation: string) {
+        return this.usersService.addRecommendation(req.user._id, friendId, recommendation)
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Delete("remove/recommendation/:friendId")
     @HttpCode(200)
-    removeRecommendation(@Req() req, @Param("friendId") friendId: GetFriendDto, @Query() recommendation: string) {
-        return this.usersService.removeRecommendation(req.user._id, friendId.friendId, recommendation)
+    removeRecommendation(@Req() req, @Param("friendId") friendId: string, @Query() recommendation: string) {
+        return this.usersService.removeRecommendation(req.user._id, friendId, recommendation)
     }
 }
