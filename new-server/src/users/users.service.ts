@@ -57,20 +57,22 @@ export class UsersService {
 
     async update(id: string, updatedUser: UpdateUserDto) {
         let user = await this.usersCollection.findById(id).exec()
-        
         if (!user) {
             throw new NotFoundException("could not find user with this _id")
         }
-        
-        if (user) {
-            return {
-                msg: "user created successfully"
-            }
-        } else {
-            throw new InternalServerErrorException('could not update user account');
+
+        const updatedUserSuccessfully = await this.usersCollection.updateOne({
+            _id: id
+        },  { $set: updatedUser }).exec()
+        if (!updatedUserSuccessfully.modifiedCount) {
+            throw new InternalServerErrorException("could not update user")
+        }
+        console.log(updatedUserSuccessfully)
+        return {
+            msg: "user updated successfully"
         }
     }
-
+ 
     async getUser(id: string) {
         const user = await this.usersCollection.findById(id).exec()
 
