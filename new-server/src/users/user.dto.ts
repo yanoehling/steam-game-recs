@@ -71,9 +71,9 @@ export class AddFriendDto {
 }
 
 export class RemoveFriendDto {
-  @IsMongoId({ message: "invalid _id, it must be a mongodb's object id" })
+  @IsString()
   @IsNotEmpty()
-  friendId: string;
+  friendName: string;
 }
 
 export class GetFriendDto {
