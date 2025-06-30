@@ -12,6 +12,13 @@ export default function RegisterPage(){
     const [validez, setValidez] = React.useState(Array(5).fill(false))
     const [valores, setValores] = React.useState(Array(6).fill(''))
     const navigate = useNavigate();
+    const TOKEN = localStorage.getItem("TOKEN")
+
+    function navigateHome(){
+        if (TOKEN) {
+            navigate('/home')
+        }
+    }
 
     function handleValidez(index, valor) {
         const nextValidez = validez.map((c, i) => {
@@ -52,6 +59,9 @@ export default function RegisterPage(){
         if (texto === ''){ 
             respostas.validade = false; 
             respostas.status = `${nome} não pode ser um espaço em branco.`
+        } else if (texto.includes(" ")) {
+            respostas.validade = false; 
+            respostas.status = `${nome} não pode ter espaços vazios.`
         } else {
             // Usando GET com query parameters
             const url = `/users/check?username=${encodeURIComponent(texto)}`;
@@ -142,14 +152,14 @@ export default function RegisterPage(){
             const serverResponse = await data_register.json();
             localStorage.getItem("TOKEN", serverResponse.token)
 
-            serverResponse.msg === "Sucesso ao criar registro." ? navigate('/') : console.log(serverResponse.msg)
+            serverResponse.msg === "Sucesso ao criar registro." ? navigate('/home') : console.log(serverResponse.msg)
         }
     }
 
     //Return final
     return (
         <>
-        <main className="roboto fundo-jogos">
+        <main className="roboto fundo-jogos" onLoad={navigateHome}>
             {showFriendList && (
                 <FriendList onClose={() => setShowFriendList(false)}/>
             )}

@@ -54,10 +54,10 @@ export default function CampoSenhas({index1, index2, validaTexto, validaSenha, v
     return(
     <>
         <label>Escreva sua senha:</label>
-        <input type='password' onBlur={handleOnBlurTexto}/>
+        <input type='password' onBlur={handleOnBlurTexto} value={valor1}/>
         <p className={isValid[0] ? 'status-ok' : 'status-fail'}>{status[0]}</p>
         <label>Repita sua senha:</label>
-        <input type='password' onBlur={handleOnBlurSenha}/>
+        <input type='password' onBlur={handleOnBlurSenha} value={valor2}/>
         <p className={isValid[1] ? 'status-ok' : 'status-fail'}>{status[1]}</p>
     </>
     )

@@ -19,7 +19,7 @@ export default function Campo({index, label, tipo, name, onblur, valor=''}){
     return(
     <>
         <label>{label}</label>
-        <input type={tipo} onBlur={handleOnBlur}/>
+        <input type={tipo} value={valor} onBlur={handleOnBlur}/>
         <p className={isValid ? 'status-ok' : 'status-fail'}>{text}</p>
     </>
     )

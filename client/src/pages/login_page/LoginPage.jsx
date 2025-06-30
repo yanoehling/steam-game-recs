@@ -2,7 +2,7 @@ import '../../style/main.css';
 import NavBar from '../../components/nav/nav.jsx';
 import Campo from '../../components/campos/Campo.jsx';
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer.jsx';
 import FriendList from '../../components/friendList/friendList.jsx';
 
@@ -10,6 +10,13 @@ function LoginPage(){
     const [showFriendList, setShowFriendList] = useState(false)   
     const [valores, setValores] = React.useState({})
     const navigate = useNavigate();
+    const TOKEN = localStorage.getItem("TOKEN")
+
+    function navigateHome(){
+        if (TOKEN) {
+            navigate('/home')
+        }
+    }
 
     function handleValores(e, name, index) {
         const nextValor = valores
@@ -34,14 +41,14 @@ function LoginPage(){
             if (!serverResponse.token) {
                 statusLogin.innerHTML = "Username ou senha incorretos.";
             } else {
-                navigate('/');
+                navigate('/home');
             }
         }
     }
 
     return (
         <>
-        <main className="roboto fundo fundo-jogos">
+        <main className="roboto fundo-jogos" onLoad={navigateHome}>
             {showFriendList && (
                 <FriendList onClose={() => setShowFriendList(false)}/>
             )}
