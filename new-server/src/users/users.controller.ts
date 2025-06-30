@@ -22,7 +22,7 @@ export class UsersController {
 
     @Get("check")
     @HttpCode(200)
-    checkUsername(@Query() username: string) {
+    checkUsername(@Query("username") username: string) {
         return this.usersService.checkUsers(username)
     }
 
