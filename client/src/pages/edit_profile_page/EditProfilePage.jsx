@@ -6,19 +6,26 @@ import CampoSenhas from '../../components/campos/CampoSenhas';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import Footer from '../../components/footer/footer.jsx';
+import FriendList from '../../components/friendList/friendList.jsx';
 
 export default function EditProfilePage(user){
+    const [gotData, setGotData] = React.useState(false)
     const [validez, setValidez] = React.useState(Array(5).fill(false))
     const [valores, setValores] = React.useState(Array(6).fill(''))
+    const [showFriendList, setShowFriendList] = React.useState(false)
     const navigate = useNavigate();
     const { userObjectId } = useParams();
+    const TOKEN = localStorage.getItem("TOKEN")
 
-    async function getData(user) {
-        const profile_data = await fetch(`/get-user?username=${encodeURIComponent(user)}`, {method: "GET"});
-
-        const serverResponse = await profile_data.json()
-        if (serverResponse) {
-            setValores(serverResponse)
+    const navigateHome = () => {
+        if (!TOKEN) {
+            navigate('/home')
+        }
+    }
+    
+    const showFriends = () => {
+        if(TOKEN){
+        setShowFriendList(true)
         }
     }
 
@@ -61,6 +68,9 @@ export default function EditProfilePage(user){
         if (texto === ''){ 
             respostas.validade = false; 
             respostas.status = `${nome} não pode ser um espaço em branco.`
+        } else if (texto.includes(" ")) {
+            respostas.validade = false; 
+            respostas.status = `${nome} não pode ter espaços vazios.`
         } else {
             // Usando GET com query parameters
             const url = `/check-user?username=${encodeURIComponent(texto)}`;
@@ -158,32 +168,57 @@ export default function EditProfilePage(user){
 
             const serverResponse = await data_register.json();
 
-            serverResponse.msg === "Sucesso ao editar perfil." ? navigate('/') : console.log(serverResponse.msg)
+            serverResponse.msg === "Sucesso ao editar perfil." ? navigate('/home') : console.log(serverResponse.msg)
         }
     }
 
-    getData(userObjectId)
+    async function getData() {
+        const profile_data = await fetch('/users/me',
+        {method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${TOKEN}`
+        }});
+
+        const serverResponse = await profile_data.json()
+        if (serverResponse) {
+            let nextValores = [serverResponse.name, serverResponse.username, serverResponse.birthday, serverResponse.email, serverResponse.password, serverResponse.password]
+            setGotData(true)
+            setValores(nextValores)
+        }
+    }
+
     //Return final
-    return (
-        <main className="flex-container-column roboto">
-            <header>
-                <NavBar />
-            </header>
-            <section className="login-menu gray-color flex-container-column">
-                <h2 style={{marginBottom: '20px'}}>Editar Perfil</h2>
-                <form action="" className="asap">
-                    <Campo index={0} label='Escreva seu nome completo:' tipo="text" name="Nome" onblur={validaEmBranco} valor={valores[0]}/>
-                    <Campo index={1} label='Escreva um nome para seu usuário:' tipo='text' name='Usuário' onblur={validaUser} valor={valores[1]}/>
-                    <Campo index={2} label='Insira sua data de nascimento:' tipo='date' name='Data de nascimento' onblur={validaEmBranco} valor={valores[2]}/>
-                    <Campo index={3} label='Escreva seu e-mail:' tipo='email' name='E-mail' onblur={validaEmail} valor={valores[3]}/>
-                    <CampoSenhas index1={4} index={5} validaTexto={validaEmBranco} validaSenha={validaSenha} valor1={valores[4]} valor2={valores[5]}/>
-                    <div className="flex-container-row">
-                        <button type='button' onClick={editarConta}>Enviar</button>
-                    </div>
-                    
-                </form>
-            </section>
-            <Footer />
-        </main>
-    )
+    if (!gotData) {
+        console.log('pim')
+        getData()
+    } else {
+        console.log(valores)
+        return (
+            <main className="flex-container-column roboto" onLoad={navigateHome}>
+                {showFriendList && (
+                    <FriendList onClose={() => setShowFriendList(false)}/>
+                )}
+                <header>
+                    <NavBar showFriends={showFriends}/>
+                </header>
+                <section className="login-menu gray-color flex-container-column">
+                    <h2 style={{marginBottom: '20px'}}>Editar Perfil</h2>
+                    <form action="" className="asap">
+                        <Campo index={0} label='Escreva seu nome completo:' tipo="text" name="Nome" onblur={validaEmBranco} valor={valores[0]}/>
+                        <Campo index={1} label='Escreva um nome para seu usuário:' tipo='text' name='Usuário' onblur={validaUser} valor={valores[1]}/>
+                        <Campo index={2} label='Insira sua data de nascimento:' tipo='date' name='Data de nascimento' onblur={validaEmBranco} valor={valores[2]}/>
+                        <Campo index={3} label='Escreva seu e-mail:' tipo='email' name='E-mail' onblur={validaEmail} valor={valores[3]}/>
+                        <CampoSenhas index1={4} index={5} validaTexto={validaEmBranco} validaSenha={validaSenha} valor1={valores[4]} valor2={valores[5]}/>
+                        <div className="flex-container-row">
+                            <button type='button' onClick={editarConta}>Enviar</button>
+                        </div>
+                        
+                    </form>
+                </section>
+                <Footer />
+            </main>
+        )
+    }
+    
 }

@@ -5,7 +5,7 @@ export default function Footer(){
                 <h1>LOGO</h1>
             </div>
             <div className="footer-infos">
-                <p>Créditos para os desenvolvedores: Patrick Milka, Julio César, Raiden Alves e Yan Manika</p>
+                <p>Créditos para os desenvolvedores: Patrick Leite, Julio César, Raiden Alves e Yan Manica</p>
                 <a href="#">Termo de Serviço</a>
                 <p></p>
                 <a href="#">Política de Privacidade</a>

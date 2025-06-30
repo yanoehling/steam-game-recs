@@ -11,22 +11,22 @@ import EditProfilePage from "./pages/edit_profile_page/EditProfilePage.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />
+        element: <LoginPage />
     },
     {
         path: "/game/",
         element: <GamePage />
     },
     {
-        path: '/login',
-        element: <LoginPage />
+        path: '/home',
+        element: <App />
     },
     {
         path: '/register',
         element: <RegisterPage />
     },
     {
-        path: '/edit/:userId',
+        path: '/edit',
         element: <EditProfilePage />
     },
 ])
