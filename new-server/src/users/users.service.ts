@@ -90,32 +90,34 @@ export class UsersService {
         return user.friends
     }
 
-    async addFriend(userId: string, friendId: string) {
-        if (userId == friendId) {
-            throw new ForbiddenException("user cannot add itself as friend")
-        }
-
+    async addFriend(userId: string, friendName: string) {
         const user = await this.usersCollection.findById(userId).exec()
         if (!user) {
             throw new NotFoundException("could not find user")
         }
 
-        const friend = await this.usersCollection.findById(friendId).exec()
+        const friend = await this.usersCollection.findOne({
+            username: friendName
+        }).exec()
         if (!friend) {
-            throw new NotFoundException("could not find friend")
+            throw new NotFoundException("could not find friend with given username")
+        }
+
+        if (userId == friend.id) {
+            throw new ForbiddenException("user cannot add itself as friend")
         }
 
         const alreadyFriends = 
-            (user.friends.filter(friend => friend.id == friendId).length != 0) 
+            (user.friends.filter(f => f.id == friend.id).length != 0) 
             &&
-            (friend.friends.filter(friend => friend.id == userId).length != 0)
+            (friend.friends.filter(f => f.id == userId).length != 0)
 
         if (alreadyFriends) {
             throw new ForbiddenException("users are already friends")
         }
 
         user.friends.push({
-            id: friendId,
+            id: friend.id,
             recommendations: [],
         })
 
@@ -126,8 +128,7 @@ export class UsersService {
             recommendations: [],
         })
 
-        const addedFriendToUserFriends = await user.save()
-
+        const addedFriendToUserFriends = await friend.save()
 
         if (!addedFriendToUserFriends || !addedUserToNewFriendFriends) {
             throw new InternalServerErrorException("could not add friend")
