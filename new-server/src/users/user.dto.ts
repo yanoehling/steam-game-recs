@@ -65,9 +65,9 @@ export class GetUserByIdDto {
 }
 
 export class AddFriendDto {
-  @IsMongoId({ message: "invalid _id, it must be a mongodb's object id" })
+  @IsString()
   @IsNotEmpty()
-  friendId: string;
+  friendName: string;
 }
 
 export class RemoveFriendDto {
