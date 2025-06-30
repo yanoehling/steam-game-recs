@@ -38,11 +38,14 @@ export class UsersService {
     async checkUsers(username: string) {
         const user = await this.usersCollection.findOne({ username: username }).exec()
         if (user) {
-            throw new NotFoundException("user with this username already exists")
+            return {
+                userExists: true,
+            }
         }
 
         return {
-            msg: "username avaiable to be used"
+            msg: "username avaiable to be used",
+            userExists: false,
         }
     }
 
