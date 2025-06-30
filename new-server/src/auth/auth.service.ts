@@ -23,7 +23,7 @@ export class AuthService {
         }
 
         return {
-            access_token: this.jwtService.sign({
+            token: this.jwtService.sign({
                 _id: checkIfUserLoginIsValid._id,
             }),
         }

@@ -13,12 +13,6 @@ export class UsersController {
         return this.usersService.create(user)
     }
 
-    @Get("check")
-    @HttpCode(200)
-    checkUser(@Query() username: string) {
-        return this.usersService.checkUser(username)
-    }
-
     @Get()
     @HttpCode(200)
     getUsers() {

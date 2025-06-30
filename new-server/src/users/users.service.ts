@@ -11,6 +11,7 @@ export class UsersService {
     constructor(
         @InjectModel(User.name) private usersCollection: Model<UserDocument>,
         @InjectModel(Game.name) private gamesCollection: Model<GameDocument>,
+        private jwtService: JwtService,
     ) {}
 
     async create(user: CreateUserDto) {
@@ -24,7 +25,10 @@ export class UsersService {
         
         if (newUser && newUser._id) {
             return {
-                msg: "user created successfully"
+                msg: "user created successfully",
+                token: this.jwtService.sign({
+                    _id: newUser._id,
+                }),
             }
         } else {
             throw new InternalServerErrorException('could not create user account');
@@ -56,18 +60,6 @@ export class UsersService {
         }
     }
 
-    async checkUser(username: string) {
-        const existingUser = await this.usersCollection.findOne({ username: username }).exec()
-        
-        if (!existingUser) {
-            throw new NotFoundException("user does not exist")
-        }
-
-        return {
-            msg: "user exists"
-        }
-    }
-    
     async getUser(id: string) {
         const user = await this.usersCollection.findById(id).exec()
 
