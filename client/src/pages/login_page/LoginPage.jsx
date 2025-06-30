@@ -28,8 +28,8 @@ function LoginPage(){
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             })
-
             const serverResponse = await data_register.json();
+            localStorage.setItem("TOKEN", serverResponse.token)
             let statusLogin = document.getElementById("statusLogin");
             if (!serverResponse.accountExists) {
                 statusLogin.innerHTML = "Username ou senha incorretos.";

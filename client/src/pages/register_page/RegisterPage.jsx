@@ -140,6 +140,7 @@ export default function RegisterPage(){
             })
 
             const serverResponse = await data_register.json();
+            localStorage.getItem("TOKEN", serverResponse.token)
 
             serverResponse.msg === "Sucesso ao criar registro." ? navigate('/') : console.log(serverResponse.msg)
         }
