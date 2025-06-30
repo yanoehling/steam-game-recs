@@ -8,13 +8,14 @@ function SearchBarTag({type}){
                 <label htmlFor="">Escreva o nome do usuário</label>
                 <input type="text" />
             </form>
-            <button>Enviar</button>
+            {type ? (<button className="add-friend">Enviar</button>) : (<button className="delet-friend">Enviar</button>)}
         </div>
     )
 }
 
 function FriendList({onClose}){
     const [searchBar, setSearchBar] = useState(false)
+    const [type, setType] = useState(false)
     return(
         <div className="background-friend">
             <div className="dark-translucid-background background-friend"></div>
@@ -24,10 +25,10 @@ function FriendList({onClose}){
                     <button><img src={x_button} alt="exit_button" onClick={onClose}/></button>
                 </div>
                 <div className="options-friend">
-                    <button className="add-friend" onClick={()=> setSearchBar(true)}>Adicionar Amigo</button>
-                    <button className="delet-friend" onClick={()=> setSearchBar(true)}>Excluir Amigo</button>
+                    <button className="add-friend" onClick={()=> {setSearchBar(true); setType(true)}}>Adicionar Amigo</button>
+                    <button className="delet-friend" onClick={()=> {setSearchBar(true); setType(false)}}>Excluir Amigo</button>
                 </div>
-                {searchBar && <SearchBarTag />}
+                {searchBar && <SearchBarTag type={type}/>}
                 <div className="friends">
                     <button>Oi</button>
                     <button>Oi</button>

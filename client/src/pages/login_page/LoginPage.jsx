@@ -31,7 +31,7 @@ function LoginPage(){
             const serverResponse = await data_register.json();
             localStorage.setItem("TOKEN", serverResponse.token)
             let statusLogin = document.getElementById("statusLogin");
-            if (!serverResponse.accountExists) {
+            if (!serverResponse.token) {
                 statusLogin.innerHTML = "Username ou senha incorretos.";
             } else {
                 navigate('/');
