@@ -19,9 +19,13 @@ const showcaseInfo = [
 ]
 
 function Home() {
+  const TOKEN = localStorage.getItem("TOKEN")
   const [showFriendList, setShowFriendList] = useState(false)
+  
   const showFriends = () => {
-    setShowFriendList(true)
+    if(TOKEN){
+      setShowFriendList(true)
+    }
 
   }
   return (
