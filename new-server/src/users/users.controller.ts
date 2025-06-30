@@ -19,12 +19,6 @@ export class UsersController {
         return this.usersService.getUsers()
     }
 
-    @Get(":id")
-    @HttpCode(200)
-    getUser(@Param('id') id: GetUserByIdDto) {
-        return this.usersService.getUser(id.id)
-    }
-
     @UseGuards(AuthGuard('jwt'))
     @Patch()
     @HttpCode(200)
@@ -37,6 +31,19 @@ export class UsersController {
     @HttpCode(200)
     deleteUser(@Req() req) {
         return this.usersService.delete(req.user._id)
+    }
+
+    @UseGuards(AuthGuard("jwt"))
+    @Get("friendlist")
+    @HttpCode(200)
+    getFriendList(@Req() req) {
+        return this.usersService.getFriendList(req.user._id)
+    }
+
+    @Get(":id")
+    @HttpCode(200)
+    getUser(@Param('id') id: GetUserByIdDto) {
+        return this.usersService.getUser(id.id)
     }
 
     @UseGuards(AuthGuard('jwt'))

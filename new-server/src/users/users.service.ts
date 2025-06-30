@@ -28,30 +28,21 @@ export class UsersService {
                 msg: "user created successfully",
                 token: this.jwtService.sign({
                     _id: newUser._id,
-                }),
+                })
             }
         } else {
             throw new InternalServerErrorException('could not create user account');
         }
-      
     }
 
-    async update(userId: string, updatedUser: UpdateUserDto) {
-        const alreadyExistingUser = await this.usersCollection.findById(userId).exec()
+    async update(id: string, updatedUser: UpdateUserDto) {
+        let user = await this.usersCollection.findById(id).exec()
         
-        if (!alreadyExistingUser) {
+        if (!user) {
             throw new NotFoundException("could not find user with this _id")
         }
         
-        const updatedUserAccount = await this.usersCollection.findByIdAndUpdate(
-            {
-                id: userId,
-            },
-            updatedUser
-        )
-
-        
-        if (updatedUserAccount) {
+        if (user) {
             return {
                 msg: "user created successfully"
             }
@@ -88,6 +79,15 @@ export class UsersService {
         return {
             msg: "user account deleted successfully"
         }
+    }
+
+    async getFriendList(id: string) {
+        const user = await this.usersCollection.findById(id).exec()
+        if (!user) {
+            throw new NotFoundException("could not find user with given _id")
+        }
+
+        return user.friends
     }
 
     async addFriend(userId: string, friendId: string) {
