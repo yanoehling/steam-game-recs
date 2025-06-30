@@ -109,7 +109,7 @@ export class UsersService {
 
         const alreadyFriends = 
             (user.friends.filter(f => f.id == friend.id).length != 0) 
-            &&
+            ||
             (friend.friends.filter(f => f.id == userId).length != 0)
 
         if (alreadyFriends) {
