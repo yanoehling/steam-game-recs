@@ -8,8 +8,10 @@ import hollowKnightBanner from './Hollow_Knight_Banner.png';
 import undertaleBanner from './Undertale_banner.png';
 import theLastOfUsBanner from './The_Last_Of_Us_Banner.png';
 import FriendList from '../../components/friendList/friendList.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Footer from '../../components/footer/footer.jsx';
+import { useSearchParams } from 'react-router-dom';
+
 
 
 const showcaseInfo = [
@@ -19,9 +21,28 @@ const showcaseInfo = [
 ]
 
 function Home() {
+  const [game, setGame] = useState(null)
+  const [params] = useSearchParams()
+  useEffect(() => {
+          fetch(`http://localhost:5000/games/`)
+          .then((response) => response.json())
+          .then((response) =>setGame(response))
+          .catch((error) => console.log(error))
+      }, [params])
+    
   const TOKEN = localStorage.getItem("TOKEN")
   const [showFriendList, setShowFriendList] = useState(false)
-  
+  function slide(direction){
+    const slider = document.querySelector(".games-horizontal")
+    let sinal = "-"
+    if(direction){
+      sinal = "+"
+    }
+    console.log(slider)
+    slider.style.marginLeft = `${sinal}60px`;
+    slider.style.transition = "1s";
+  }
+
   const showFriends = () => {
     if(TOKEN){
       setShowFriendList(true)
@@ -30,7 +51,7 @@ function Home() {
   }
   return (
     <>
-    
+    {game &&(<>
     <main className="roboto">
       {showFriendList && (
         <FriendList onClose={() => setShowFriendList(false)}/>
@@ -41,17 +62,23 @@ function Home() {
       </header>
       <section className="game-list-horizontal">
         <h2>Jogos do Momento</h2>
-        <div className="games-horizontal">
-          {gamesInfos.map((game) =>
-          <Game 
-          title={game.title}
-          img={game.img}
-          price={game.price}
-          />)}
+          <button className='btn2 back-btn2' onClick={()=> slide(true)}></button> 
+          <button className='btn2 next-btn2' onClick={()=> slide(false)}></button>
+        <div className="container-game-list">
+          <div className="games-horizontal">
+            {game.map((game) =>
+            <Game 
+            title={game.name}
+            img={game.img[3].img}
+            price={game.price}
+            id={game._id}
+            />)}
+          </div>
         </div>
       </section>
     </main>
     <Footer />
+    </>)}
     </>
   );
 }

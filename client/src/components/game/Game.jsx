@@ -1,12 +1,12 @@
 import '../../style/main.css';
 import '../../assets/games_img/img_import'
 
-function Game({ img, title, price}){
+function Game({ img, title, price, id}){
     return(
-        <a>
+        <a href={`/game?title=${title}&id=${id}`}>
             <img src={img} className="games"/>
             <p>{title}</p>
-            <p>{price}</p>
+            <p>R${price}</p>
         </a>
     )
 }
