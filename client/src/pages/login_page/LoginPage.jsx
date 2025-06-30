@@ -52,7 +52,6 @@ function LoginPage(){
             {showFriendList && (
                 <FriendList onClose={() => setShowFriendList(false)}/>
             )}
-            const showFriend = 
             <header>
                 <NavBar showFriends={()=> setShowFriendList(true)}/>
             </header>
