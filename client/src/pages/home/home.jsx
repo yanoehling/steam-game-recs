@@ -37,10 +37,10 @@ function Home() {
     let currentmargin = parseInt(slider.style.marginLeft) || 0
     const margin = 100;
     if((currentmargin >= -800) && (!direction)){
-      slider.style.marginLeft = `${currentmargin+margin}px`;
-      slider.style.transition = "1s";
-    }else if((currentmargin = 0) && (direction)){
       slider.style.marginLeft = `${currentmargin-margin}px`;
+      slider.style.transition = "1s";
+    }else if((currentmargin <= 0) && (direction)){
+      slider.style.marginLeft = `${currentmargin+margin}px`;
       slider.style.transition = "1s";      
     }
 
@@ -72,7 +72,7 @@ function Home() {
             {game.map((game) =>
             <Game 
             title={game.name}
-            img={game.images[3].img}
+            img={game.images[0].img}
             price={game.price}
             id={game._id}
             />)}
