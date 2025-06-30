@@ -15,7 +15,7 @@ import Footer from '../../components/footer/footer.jsx';
 const showcaseInfo = [
   {id:1, img:undertaleBanner, href:`/game?title=Undertale&id=685d9527a24a6417a51e8d63`, name:'Undertale Banner'},
   {id:2, img:hollowKnightBanner, href:'/game?title=HollowKnight&id=685d9527a24a6417a51e8d64', name:'Hollow Knight Banner'},
-  {id:3, img:theLastOfUsBanner, href:'/game', name:'The Last Of Us Banner'}
+  {id:3, img:theLastOfUsBanner, href:'/game?title="TheLastOfUs&id=685d9527a24a6417a51e8d65', name:'The Last Of Us Banner'}
 ]
 
 function Home() {

@@ -23,7 +23,7 @@ function LoginPage(){
                 username: valores.username,
                 password: valores.password
             };
-            let data_register = await fetch('/login-account', {
+            let data_register = await fetch('/auth/login', {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)

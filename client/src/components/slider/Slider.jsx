@@ -5,9 +5,14 @@ let intervalId;
 
 
 function Showcase_imgs(showcase_game_info, is_anchours){
+  let imgs = [...showcase_game_info];
+  if(!is_anchours){
+    imgs.pop()
+  }
+
   return (
     <>
-      {showcase_game_info.map((showcase)=> (
+      {imgs.map((showcase)=> (
         is_anchours ? (<a href={showcase.href}>
           <img src={showcase.img} alt={showcase.name}/>
         </a>) : (<img src={showcase.img} alt={showcase.name}/>)
