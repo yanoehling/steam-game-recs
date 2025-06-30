@@ -14,7 +14,6 @@ export default function EditProfilePage(user){
     const [valores, setValores] = React.useState(Array(6).fill(''))
     const [showFriendList, setShowFriendList] = React.useState(false)
     const navigate = useNavigate();
-    const { userObjectId } = useParams();
     const TOKEN = localStorage.getItem("TOKEN")
 
     const navigateHome = () => {
@@ -141,7 +140,7 @@ export default function EditProfilePage(user){
         return respostas
     }
 
-    async function editarConta() {
+    const editarConta = async () => {
         let validezes = 0
         for (let i = 0; i < validez.length; i++) {
             if (validez[i] === true) {
@@ -149,9 +148,7 @@ export default function EditProfilePage(user){
             } 
         }
         if (validezes === 5) {
-            console.log("userobjectId:", userObjectId)
-            const data = {
-                objectId: userObjectId, 
+            const data = { 
                 name: valores[0],
                 username: valores[1],
                 birthday: valores[2], 
@@ -160,14 +157,15 @@ export default function EditProfilePage(user){
             }
             const jsonData = JSON.stringify(data)
             
-            let data_register = await fetch('/edit-account', {
+            let data_register = await fetch('/users', {
                 method: "PATCH",
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${TOKEN}`},
                 body: jsonData
             })
 
             const serverResponse = await data_register.json();
-
             serverResponse.msg === "Sucesso ao editar perfil." ? navigate('/home') : console.log(serverResponse.msg)
         }
     }
@@ -181,21 +179,22 @@ export default function EditProfilePage(user){
         }});
 
         const serverResponse = await profile_data.json()
-        if (serverResponse) {
+        if (serverResponse._id) {
             let nextValores = [serverResponse.name, serverResponse.username, serverResponse.birthday, serverResponse.email, serverResponse.password, serverResponse.password]
             setGotData(true)
             setValores(nextValores)
+        } else {
+            console.log(serverResponse);
         }
     }
 
     //Return final
     if (!gotData) {
-        console.log('pim')
         getData()
     } else {
-        console.log(valores)
         return (
-            <main className="flex-container-column roboto" onLoad={navigateHome}>
+            <>
+            <main className="roboto fundo-jogos" onLoad={navigateHome}>
                 {showFriendList && (
                     <FriendList onClose={() => setShowFriendList(false)}/>
                 )}
@@ -216,8 +215,9 @@ export default function EditProfilePage(user){
                         
                     </form>
                 </section>
-                <Footer />
             </main>
+            <Footer />
+            </>
         )
     }
     

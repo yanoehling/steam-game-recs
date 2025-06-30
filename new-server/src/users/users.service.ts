@@ -38,11 +38,14 @@ export class UsersService {
     async checkUsers(username: string) {
         const user = await this.usersCollection.findOne({ username: username }).exec()
         if (user) {
-            throw new ForbiddenException("user with this username already exists")
+            return {
+                userExists: true,
+            }
         }
 
         return {
-            msg: "username avaiable to be used"
+            msg: "username avaiable to be used",
+            userExists: false,
         }
     }
 
@@ -67,9 +70,8 @@ export class UsersService {
         if (!updatedUserSuccessfully.modifiedCount) {
             throw new InternalServerErrorException("could not update user")
         }
-        console.log(updatedUserSuccessfully)
         return {
-            msg: "user updated successfully"
+            msg: "Sucesso ao editar perfil"
         }
     }
  
