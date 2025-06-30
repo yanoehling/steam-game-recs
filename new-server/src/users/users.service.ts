@@ -67,9 +67,8 @@ export class UsersService {
         if (!updatedUserSuccessfully.modifiedCount) {
             throw new InternalServerErrorException("could not update user")
         }
-        console.log(updatedUserSuccessfully)
         return {
-            msg: "user updated successfully"
+            msg: "Sucesso ao editar perfil"
         }
     }
  
