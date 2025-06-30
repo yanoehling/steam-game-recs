@@ -149,7 +149,7 @@ export default function RegisterPage(){
     //Return final
     return (
         <>
-        <main className="roboto">
+        <main className="roboto fundo-jogos">
             {showFriendList && (
                 <FriendList onClose={() => setShowFriendList(false)}/>
             )}

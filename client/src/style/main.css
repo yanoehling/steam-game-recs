@@ -178,6 +178,11 @@ h2{
   background-size: cover;
 }
 
+main.fundo-jogos{ 
+  gap: 0;
+}
+
+
 .status-fail {
   color: red; 
 }
@@ -211,6 +216,26 @@ h2{
   right: 4%;
 }
 
+.btn2{
+  background-image: url(../../public/img/Seta.png);
+  width: 30px;
+  height: 51px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  top: 180px;
+  z-index: 3;
+}
+
+.back-btn2{
+  transform: scaleX(-1);
+
+}
+
+.next-btn2{
+  left: 98%
+}
 main{
   display: flex;
   flex-direction: column;
@@ -220,8 +245,13 @@ main{
 }
 
 .game-list-horizontal{
-  padding-left: 70px;
-  width: max-content;
+  padding-left: 10px;
+
+}
+
+.container-game-list{
+  max-width: 800px;
+  overflow: hidden;
 }
 
 .games-horizontal{
@@ -231,6 +261,7 @@ main{
   align-items: center;
   flex-direction: row;
   gap: 50px;
+  padding-bottom: 100px;
 }
 
 .games{
@@ -466,7 +497,6 @@ a{
   gap:10px
 }
 footer{
-  margin-top: 100px;
   box-sizing: border-box;
   bottom: 0;
   padding: 20px 20px 10px 20px;
