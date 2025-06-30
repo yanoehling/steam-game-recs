@@ -174,7 +174,7 @@ h2{
 }
 
 .fundo-jogos{
-  background-image: url(../../public/img/Imagem\ de\ fundo\ projeto.png);
+  background-image: url(../assets/games_img/Imagem_de_fundo_projeto.png);
   background-size: cover;
 }
 
@@ -458,7 +458,6 @@ a{
 }
 .search-friend button{
   border: none;
-  background-color: #4D4242;
   padding: 4px;
   border-radius: 5px;
 }
