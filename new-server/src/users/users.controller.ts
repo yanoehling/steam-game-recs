@@ -73,12 +73,12 @@ export class UsersController {
         return this.usersService.removeFriend(req.user._id, friendName.friendName)
     }
 
-    @UseGuards(AuthGuard("jwt"))
-    @Post("add/recommendation/:friendId")
-    @HttpCode(201)
-    addRecommendation(@Req() req, @Param("friendId") friendId: string, @Query() recommendation: string) {
-        return this.usersService.addRecommendation(req.user._id, friendId, recommendation)
-    }
+    // @UseGuards(AuthGuard("jwt"))
+    // @Post("add/recommendation")
+    // @HttpCode(201)
+    // addRecommendation(@Req() req, @Body() friendName: string, @Body() recommendation: string) {
+    //     return this.usersService.addRecommendation(req.user._id, friendId, recommendation)
+    // }
 
     @UseGuards(AuthGuard('jwt'))
     @Delete("remove/recommendation/:friendId")
