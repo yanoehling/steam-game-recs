@@ -37,7 +37,7 @@ export class UsersService {
 
     async checkUsers(username: string) {
         const user = await this.usersCollection.findOne({ username: username }).exec()
-        if (user) {
+        if (!user) {
             throw new ForbiddenException("user with this username already exists")
         }
 
