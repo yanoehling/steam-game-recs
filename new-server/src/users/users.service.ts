@@ -46,6 +46,15 @@ export class UsersService {
         }
     }
 
+    async getLoggedUser(id: string) {
+        const user = await this.usersCollection.findById(id).exec()
+        if (!user) {
+            throw new NotFoundException("could not find user with given _id")
+        }
+
+        return user
+    }
+
     async update(id: string, updatedUser: UpdateUserDto) {
         let user = await this.usersCollection.findById(id).exec()
         

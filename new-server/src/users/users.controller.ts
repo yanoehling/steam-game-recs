@@ -18,7 +18,13 @@ export class UsersController {
     getUsers() {
         return this.usersService.getUsers()
     }
-
+    
+    @UseGuards(AuthGuard("jwt"))
+    @Get("me")
+    @HttpCode(200)
+    getLoggedUser(@Req() req) {
+        return this.usersService.getLoggedUser(req.user._id)
+    }
 
     @Get("check")
     @HttpCode(200)
