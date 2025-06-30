@@ -33,7 +33,7 @@ function GamePage(){
             <section className="flex-container-row game-promotion">
                 {/* imagens, vídeo do jogo */}
                 <div className="flex-container-column">
-                    <Slider showcase_game_info={game.img} is_anchours={false} qt={2}/>
+                    <Slider showcase_game_info={game.images} is_anchours={false} qt={2}/>
                 </div>
 
                 {/* Descrição, nota do jogo */}
