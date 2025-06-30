@@ -7,7 +7,7 @@ let intervalId;
 function Showcase_imgs(showcase_game_info, is_anchours){
   let imgs = [...showcase_game_info];
   if(!is_anchours){
-    imgs.pop()
+    imgs.shift()
   }
 
   return (

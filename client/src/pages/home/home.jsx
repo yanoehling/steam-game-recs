@@ -34,13 +34,16 @@ function Home() {
   const [showFriendList, setShowFriendList] = useState(false)
   function slide(direction){
     const slider = document.querySelector(".games-horizontal")
-    let sinal = "-"
-    if(direction){
-      sinal = "+"
+    let currentmargin = parseInt(slider.style.marginLeft) || 0
+    const margin = 100;
+    if((currentmargin >= -800) && (!direction)){
+      slider.style.marginLeft = `${currentmargin+margin}px`;
+      slider.style.transition = "1s";
+    }else if((currentmargin = 0) && (direction)){
+      slider.style.marginLeft = `${currentmargin-margin}px`;
+      slider.style.transition = "1s";      
     }
-    console.log(slider)
-    slider.style.marginLeft = `${sinal}60px`;
-    slider.style.transition = "1s";
+
   }
 
   const showFriends = () => {
@@ -69,7 +72,7 @@ function Home() {
             {game.map((game) =>
             <Game 
             title={game.name}
-            img={game.img[3].img}
+            img={game.images[3].img}
             price={game.price}
             id={game._id}
             />)}
