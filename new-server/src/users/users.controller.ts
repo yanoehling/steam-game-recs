@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AddFriendDto, CheckUserDto, CreateUserDto, GetUserByIdDto, UpdateUserDto } from './user.dto';
+import { AddFriendDto, CheckUserDto, CreateUserDto, GetUserByIdDto, RemoveFriendDto, UpdateUserDto } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
@@ -17,6 +17,13 @@ export class UsersController {
     @HttpCode(200)
     getUsers() {
         return this.usersService.getUsers()
+    }
+
+
+    @Get("check")
+    @HttpCode(200)
+    checkUsername(@Query() username: string) {
+        return this.usersService.checkUsers(username)
     }
 
     @UseGuards(AuthGuard('jwt'))
@@ -54,10 +61,10 @@ export class UsersController {
     }
 
     @UseGuards(AuthGuard('jwt'))
-    @Delete("remove/friend/:friendId")
+    @Delete("remove/friend")
     @HttpCode(200)
-    removeFriend(@Req() req, @Param("friendId") friendId: string) {
-        return this.usersService.removeFriend(req.user._id, friendId)
+    removeFriend(@Req() req,@Body() friendName: RemoveFriendDto) {
+        return this.usersService.removeFriend(req.user._id, friendName.friendName)
     }
 
     @UseGuards(AuthGuard("jwt"))

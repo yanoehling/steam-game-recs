@@ -35,6 +35,17 @@ export class UsersService {
         }
     }
 
+    async checkUsers(username: string) {
+        const user = await this.usersCollection.findOne({ username }).exec()
+        if (user) {
+            throw new ForbiddenException("user with this username already exists")
+        }
+
+        return {
+            msg: "username avaiable to be used"
+        }
+    }
+
     async update(id: string, updatedUser: UpdateUserDto) {
         let user = await this.usersCollection.findById(id).exec()
         
@@ -139,37 +150,39 @@ export class UsersService {
         }
     }
 
-    async removeFriend(userId: string, friendId: string) {
-        if (userId == friendId) {
-            throw new ForbiddenException("user cannot remove itself as friend")
-        }
-
+    async removeFriend(userId: string, friendName: string) {
         const user = await this.usersCollection.findById(userId).exec()
         if (!user) {
             throw new NotFoundException("could not find user")
         }
 
-        const friend = await this.usersCollection.findById(friendId).exec()
+        const friend = await this.usersCollection.findOne({
+            username: friendName
+        }).exec()
         if (!friend) {
-            throw new NotFoundException("could not find friend")
+            throw new NotFoundException("could not find friend with given username")
+        }
+
+        if (userId == friend.id) {
+            throw new ForbiddenException("user cannot remove itself as friend")
         }
 
         const alreadyFriends = 
-            (user.friends.filter(friend => friend.id == friendId).length != 0) 
-            &&
-            (friend.friends.filter(friend => friend.id == userId).length != 0)
-
-        if (!alreadyFriends) {
-            throw new ForbiddenException("users are not already friends")
+            (user.friends.filter(f => f.id == friend.id).length != 0) 
+            ||
+            (friend.friends.filter(f => f.id == userId).length != 0)
+        
+        if (alreadyFriends) {
+            throw new BadRequestException("users are not friends")
         }
 
-        user.friends.filter( friend => friend.id != friendId)
+        user.friends.filter( f => f.id != friend.id)
 
         const removedUserToNewFriendFriends = await user.save()
 
         friend.friends.filter( friend => friend.id != userId)
 
-        const removedFriendToUserFriends = await user.save()
+        const removedFriendToUserFriends = await friend.save()
 
         if (!removedUserToNewFriendFriends || !removedFriendToUserFriends) {
             throw new InternalServerErrorException("could not remove friend")
