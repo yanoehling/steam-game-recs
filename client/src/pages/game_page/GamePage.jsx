@@ -13,19 +13,18 @@ import Footer from "../../components/footer/footer"
 function GamePage(){
     const [params] = useSearchParams()
     const [game, setGame] = useState(null)
+    const [imgs, setImgs] = useState(null)
     const [showFriendList, setShowFriendList] = useState(false)
-    
     useEffect(() => {
         fetch(`http://localhost:5000/games/${params.get('id')}`)
         .then((response) => response.json())
-        .then((response) => setGame(response))
+        .then((response) =>setGame(response))
         .catch((error) => console.log(error))
     }, [params])
     return(
     <>
     {game && (
         <>
-        {console.log(game)}
         <main className="gap_game">
             {showFriendList && (<FriendList onClose={()=> setShowFriendList(false)}/>)}
             <header>
@@ -34,20 +33,20 @@ function GamePage(){
             <section className="flex-container-row game-promotion">
                 {/* imagens, vídeo do jogo */}
                 <div className="flex-container-column">
-                    <Slider showcase_game_info={imagesPromote[0].img} is_anchours={false} qt={2}/>
+                    <Slider showcase_game_info={game.img} is_anchours={false} qt={2}/>
                 </div>
 
                 {/* Descrição, nota do jogo */}
                 <div className="description_section gray-color">
-                    <h1>{params.get('title')}</h1>
-                    <p><b>Nota: </b>{game[2]}</p>
+                    <h1>{game.name}</h1>
+                    <p><b>Nota: </b>{game.review}</p>
                     <div className="infos">
-                        <p>{game[3]}</p>
-                        <p><b>Desenvolvedor: </b>{game[4]}</p>
+                        <p>{game.description}</p>
+                        <p><b>Desenvolvedor: </b>{game.dev}</p>
                         <p>Categorias desse jogo:</p>
                         <div className="flex-container-column categories-container">
                             <ul className="categories">
-                                {game[5].map((cat) => {
+                                {game.category.map((cat) => {
                                     return <li>{cat}</li>
                                 })}
                             </ul>
@@ -57,8 +56,8 @@ function GamePage(){
             </section>
             <div>
                 <div className="price-div gray-color">
-                    <h2><b>{`Comprar ${params.get('title')}`}</b></h2>
-                    <button>{`R$ ${game[6]}`}</button>
+                    <h2><b>{`Comprar ${game.name}`}</b></h2>
+                    <button>{`R$ ${game.price}`}</button>
                 </div>
                 <div className="flex-container-row user_buttons">
                     <button className="gray-color">WishList</button>
