@@ -32,14 +32,15 @@ function Home() {
     
   const TOKEN = localStorage.getItem("TOKEN")
   const [showFriendList, setShowFriendList] = useState(false)
-  function slide(direction){
+  function slide(direction, width_max){
     const slider = document.querySelector(".games-horizontal")
     let currentmargin = parseInt(slider.style.marginLeft) || 0
     const margin = 100;
-    if((currentmargin >= -800) && (!direction)){
+    const width = width_max <= 765 ? -300 : -800
+    if((currentmargin > width) && (!direction)){
       slider.style.marginLeft = `${currentmargin-margin}px`;
       slider.style.transition = "1s";
-    }else if((currentmargin <= 0) && (direction)){
+    }else if((currentmargin < 0) && (direction)){
       slider.style.marginLeft = `${currentmargin+margin}px`;
       slider.style.transition = "1s";      
     }
@@ -64,15 +65,15 @@ function Home() {
         <Slider showcase_game_info={showcaseInfo} is_anchours={true} qt="2"></Slider>
       </header>
       <section className="game-list-horizontal">
-        <h2>Jogos do Momento</h2>
-          <button className='btn2 back-btn2' onClick={()=> slide(true)}></button> 
-          <button className='btn2 next-btn2' onClick={()=> slide(false)}></button>
+          <h2>Jogos do Momento</h2>
+          <button className='btn2 back-btn2' onClick={()=> slide(true, window.innerWidth)}></button> 
+          <button className='btn2 next-btn2' onClick={()=> slide(false, window.innerWidth)}></button>
         <div className="container-game-list">
           <div className="games-horizontal">
             {game.map((game) =>
             <Game 
             title={game.name}
-            img={game.images[0].img}
+            img={game.images[0]}
             price={game.price}
             id={game._id}
             />)}

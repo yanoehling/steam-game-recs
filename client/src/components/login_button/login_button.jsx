@@ -6,7 +6,7 @@ function LoginButton(){
     return (
         <>
             <div className="flex-container-row">
-                <a href="/"><img src={img_login} alt="Img-Login" style={{height: '50px'}}/></a>
+                <a href="/"><img src={img_login} alt="Img-Login" className="login-button"/></a>
             </div>
         </>
     )

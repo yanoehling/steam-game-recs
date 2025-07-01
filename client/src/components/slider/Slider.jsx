@@ -14,8 +14,8 @@ function Showcase_imgs(showcase_game_info, is_anchours){
     <>
       {imgs.map((showcase)=> (
         is_anchours ? (<a href={showcase.href}>
-          <img src={showcase.img} alt={showcase.name}/>
-        </a>) : (<img src={showcase.img} alt={showcase.name}/>)
+          <img src={showcase.img} alt={showcase.name} className="slider-img"/>
+        </a>) : (<img src={showcase.img} alt={showcase.name} className='slider-img'/>)
       ))}
     </>
   );

@@ -30,7 +30,7 @@ function GamePage(){
             <header>
                 <NavBar showFriends={()=> setShowFriendList(true)}/>
             </header>
-            <section className="flex-container-row game-promotion">
+            <section className="game-promotion">
                 {/* imagens, vídeo do jogo */}
                 <div className="flex-container-column">
                     <Slider showcase_game_info={game.images} is_anchours={false} qt={2}/>
@@ -54,7 +54,7 @@ function GamePage(){
                     </div>
                 </div>
             </section>
-            <div>
+            <div className="price-div-container">
                 <div className="price-div gray-color">
                     <h2><b>{`Comprar ${game.name}`}</b></h2>
                     <button>{`R$ ${game.price}`}</button>
