@@ -151,6 +151,8 @@ input + button{
 
 button{
   cursor: pointer;
+  background-color: transparent;
+  border: none;
 }
 
 button:hover{
@@ -205,8 +207,6 @@ main.fundo-jogos{
   background-image: url(../../public/img/Seta.png);
   width: 30px;
   height: 51px;
-  background-color: transparent;
-  border: none;
   cursor: pointer;
   position: absolute;
   top:44%;
@@ -225,12 +225,10 @@ main.fundo-jogos{
   background-image: url(../../public/img/Seta.png);
   width: 30px;
   height: 51px;
-  background-color: transparent;
-  border: none;
   cursor: pointer;
   position: relative;
   top: 180px;
-  z-index: 3;
+  z-index: 2;
 }
 
 .back-btn2{
@@ -404,8 +402,7 @@ a{
   flex-direction: column;
   align-items: center;
   position: relative;
-  left: 38%;
-
+  bottom: 20%;
 }
 
 .friend-title button{
@@ -465,7 +462,10 @@ a{
 
 .background-friend{
   width: 100%;
-  height: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 3;
   position:fixed;
   display: flex;
@@ -475,7 +475,7 @@ a{
 
 .dark-translucid-background{
   width: 100%;
-  height: 100vw;
+  height: 100%;
   z-index: 3;
   position:fixed;
   display: flex;
@@ -492,6 +492,8 @@ a{
   width: 100%;
   position:relative;
 }
+
+
 
 .search-friend form{
   width: 80%;
@@ -520,11 +522,21 @@ footer{
   align-items: start;
 }
 
-.login-button{
+.login-button-img{
   width: 50px;
 }
 
+
+
+.friedlist-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 @media screen and (max-width: 768px){
+
   footer{
     height: 60px;
     font-size: 7px;
@@ -594,11 +606,16 @@ footer{
     margin-right: 50px;
   }
   nav a{
-    font-size: 15px
+    font-size: 12px
   }
 
   nav{
     height: 70px;
+    
+  }
+
+  nav .nav-bar{
+    margin: 0 10px 0 10px;
   }
   .flex-container-row{
     gap: 15px;
@@ -641,5 +658,12 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .friend-div{
+    left:0;
+    right: 0;
+    bottom: 20%;
+    max-height: 240px;
+    overflow: scroll;
   }
 }

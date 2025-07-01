@@ -6,7 +6,7 @@ export default function NavBar({ showFriends }){
     return(
         <>
             <nav className="gray-color">
-                <div className="flex-container-row roboto">
+                <div className="flex-container-row roboto nav-bar">
                     <a href="/home">LOGO</a>
                     <a href="#">Loja</a>
                     <a href="#">Suporte</a>
