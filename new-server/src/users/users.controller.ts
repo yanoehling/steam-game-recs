@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AddFriendDto, AddRecommendationDto, CheckUserDto, CreateUserDto, GetUserByIdDto, RemoveFriendDto, UpdateUserDto } from './user.dto';
+import { AddFriendDto, AddRecommendationDto, CheckUserDto, CreateUserDto, GetUserByIdDto, RemoveFriendDto, RemoveRecommendationDto, UpdateUserDto } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
@@ -83,7 +83,7 @@ export class UsersController {
     @UseGuards(AuthGuard('jwt'))
     @Delete("remove/recommendation")
     @HttpCode(200)
-    removeRecommendation(@Req() req, @Param("friendId") friendId: string, @Query() recommendation: string) {
-        return this.usersService.removeRecommendation(req.user._id, friendId, recommendation)
+    removeRecommendation(@Req() req, @Body() recommendationToBeRemoved: RemoveRecommendationDto ) {
+        return this.usersService.removeRecommendation(req.user._id, recommendationToBeRemoved.friendName, recommendationToBeRemoved.recommendation)
     }
 }

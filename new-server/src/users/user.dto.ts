@@ -96,6 +96,10 @@ export class RemoveRecommendationDto {
   @IsMongoId({ message: "invalid _id, it must be a mongodb's object id" })
   @IsNotEmpty()
   recommendation: string;
+
+  @IsString()
+  @IsNotEmpty()
+  friendName: string;
 }
 
 
