@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { apiUrl } from './App.test.js';
+
 
 function FriendButton({friend, id, type}){
     const TOKEN = localStorage.getItem('TOKEN')
 
     async function add_recomendas(){
-        let user_data = await fetch(`${apiUrl}/users/me`, {
+        let user_data = await fetch(`/users/me`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ function FriendButton({friend, id, type}){
         const user = await user_data.json();
 
         for (let a of user.friends) {
-            let amigo_data = await fetch(`${apiUrl}/users/${a.id}`, {
+            let amigo_data = await fetch(`/users/${a.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ function FriendButton({friend, id, type}){
 
             const amigo = await amigo_data.json();
             if (amigo.username === friend.username){
-                let recomendacao_data = await fetch(`${apiUrl}/users/add/recommendation`, {
+                let recomendacao_data = await fetch(`/users/add/recommendation`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ function FriendButton({friend, id, type}){
     }
 
     async function remove_recomendas(){
-        let user_data = await fetch(`${apiUrl}/users/me`, {
+        let user_data = await fetch(`/users/me`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ function FriendButton({friend, id, type}){
         const user = await user_data.json();
 
         for (let a of user.friends) {
-            let amigo_data = await fetch(`${apiUrl}/users/${a.id}`, {
+            let amigo_data = await fetch(`/users/${a.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function FriendButton({friend, id, type}){
 
             const amigo = await amigo_data.json();
             if (amigo.username === friend.username){
-                let recomendacao_data = await fetch(`${apiUrl}/users/remove/recommendation`, {
+                let recomendacao_data = await fetch(`/users/remove/recommendation`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export default function RecomendationList({onClose, id}){
 
     const mudarAmigos = async () => {
         let newAmigos = []
-        let user_data = await fetch(`${apiUrl}/users/me`, {
+        let user_data = await fetch(`/users/me`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ export default function RecomendationList({onClose, id}){
 
         const user = await user_data.json();
         for (let a of user.friends) {
-            let amigo_data = await fetch(`${apiUrl}/users/${a.id}`, {
+            let amigo_data = await fetch(`/users/${a.id}`, {
                 method: 'GET',
                 headers: {
                 'Content-Type': 'application/json',
