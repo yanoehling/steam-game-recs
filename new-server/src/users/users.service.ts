@@ -231,44 +231,25 @@ export class UsersService {
         if (!user) {
             throw new NotFoundException("could not find user");
         }
-
+    
         const friend = await this.usersCollection.findOne({ username: friendName }).exec();
         if (!friend) {
             throw new NotFoundException("could not find friend");
         }
-
-        if (userId == friend.id) {
+    
+        if (userId === String(friend._id)) {
             throw new ForbiddenException("user cannot remove recommendation to itself");
         }
-
-        const alreadyFriends = 
-            (user.friends.filter(f => f.id == friend.id).length != 0) 
-            ||
-            (friend.friends.filter(f => f.id == userId).length != 0)
-
-        if (!alreadyFriends) {
-            throw new ForbiddenException("users are not friends");
-        }
-
-        const friendEntry = user.friends.find(f => f.id == friend.id);
-        if (!friendEntry) {
-            throw new NotFoundException("friend not found in user's friends list");
-        }
-
-        const hasRecommendation = friendEntry.recommendations.includes(recommendation);
-        if (!hasRecommendation) {
-            throw new BadRequestException("this recommendation does not exist");
-        }
-
+    
         const removedRecommendation = await this.usersCollection.updateOne(
-            { _id: userId, "friends.id": friend.id },
+            { _id: friend._id, "friends.id": userId },
             { $pull: { "friends.$.recommendations": recommendation } }
         );
-
+    
         if (removedRecommendation.modifiedCount === 0) {
             throw new InternalServerErrorException("could not remove recommendation");
         }
-
+    
         return {
             msg: "recommendation removed successfully",
         };
