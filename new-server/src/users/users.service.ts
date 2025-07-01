@@ -206,19 +206,19 @@ export class UsersService {
         }
     }
 
-    async addRecommendation(userId: string, friendId: string, recommendation: string) {
-        if (userId == friendId) {
-            throw new ForbiddenException("user cannot add recommendation to itself")
-        }
-
+    async addRecommendation(userId: string, friendName: string, recommendation: string) {
         const user = await this.usersCollection.findById(userId).exec()
         if (!user) {
             throw new NotFoundException("could not find user")
         }
 
-        const friend = await this.usersCollection.findById(friendId).exec()
+        const friend = await this.usersCollection.findOne({username: friendName}).exec()
         if (!friend) {
             throw new NotFoundException("could not find friend")
+        }
+
+        if (userId == friend.id) {
+            throw new ForbiddenException("user cannot add recommendation to itself")
         }
 
         const recommendationGame = await this.gamesCollection.findById(recommendation).exec()
@@ -227,27 +227,33 @@ export class UsersService {
         }
 
         const alreadyFriends = 
-            (user.friends.filter(friend => friend.id == friendId).length != 0) 
-            && 
-            (friend.friends.filter(friend => friend.id == userId).length != 0)
+            user.friends.some(f => f.id == friend.id) || 
+            friend.friends.some(f => f.id == userId)
 
         if (!alreadyFriends) {
             throw new ForbiddenException("users are not friends")
         }
 
-        const friendToUpdate = user.friends.find((friend) => friend.id == friendId);
-
-        const userFriendRecommendations = user.friends.find(friend => friend.id == friendId)?.recommendations
-
-        if (userFriendRecommendations?.includes(recommendation)) {
-            throw new BadRequestException("friend has already been recommended this game")
-        }
-       
-        friendToUpdate?.recommendations.push(recommendation)
-
-        const updatedUser = await user.save()
-        if (!updatedUser) {
-            throw new InternalServerErrorException("could not add new recommendation to friend")
+        user.friends.map(
+            f => {
+                if (f.id == friend.id) {
+                    f.recommendations.map(
+                        rec => {
+                            if (rec == recommendation) {
+                                throw new BadRequestException("user has already recommended this game to friend")
+                            }
+                        }
+                    )
+                }
+            }
+        )
+        
+        const addedRecommendation = await this.usersCollection.updateOne(
+            { _id: userId, "friends.id": friend.id },
+            { $addToSet: { "friends.$.recommendations": recommendation } }
+        )
+        if (!addedRecommendation) {
+            throw new InternalServerErrorException("could not add user friend's recommendation")
         }
 
         return {
