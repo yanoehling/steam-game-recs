@@ -24,7 +24,7 @@ function Home() {
   const [params] = useSearchParams()
   const navigate = useNavigate();
   useEffect(() => {
-          fetch(`http://localhost:5000/games/`)
+          fetch(`https://newserver-la8c7zveq-julio-raposos-projects.vercel.app/games/`)
           .then((response) => response.json())
           .then((response) =>setGame(response))
           .catch((error) => console.log(error))

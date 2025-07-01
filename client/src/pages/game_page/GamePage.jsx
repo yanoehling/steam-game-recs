@@ -19,7 +19,7 @@ function GamePage(){
     const navigate = useNavigate();
     const TOKEN = localStorage.getItem('TOKEN')
     useEffect(() => {
-        fetch(`http://localhost:5000/games/${params.get('id')}`)
+        fetch(` https://newserver-la8c7zveq-julio-raposos-projects.vercel.app/games/${params.get('id')}`)
         .then((response) => response.json())
         .then((response) =>setGame(response))
         .catch((error) => console.log(error))
