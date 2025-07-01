@@ -1,8 +1,6 @@
 import '../../style/main.css';
 import Slider from '../../components/slider/Slider.jsx'
 import Game from '../../components/game/Game.jsx'
-import LoginButton from '../../components/login_button/login_button.jsx';
-import {gamesInfos} from '../../assets/games_img/img_import.js';
 import NavBar from '../../components/nav/nav.jsx';
 import hollowKnightBanner from './Hollow_Knight_Banner.png';
 import undertaleBanner from './Undertale_banner.png';
