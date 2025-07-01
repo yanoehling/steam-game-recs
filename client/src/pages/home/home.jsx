@@ -10,8 +10,7 @@ import { useEffect, useState } from 'react';
 import Footer from '../../components/footer/footer.jsx';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
-
+import { apiUrl } from './App.test.js';
 
 const showcaseInfo = [
   {id:1, img:undertaleBanner, href:`/game?title=Undertale&id=685d9527a24a6417a51e8d63`, name:'Undertale Banner'},
@@ -24,7 +23,7 @@ function Home() {
   const [params] = useSearchParams()
   const navigate = useNavigate();
   useEffect(() => {
-          fetch(`https://newserver-la8c7zveq-julio-raposos-projects.vercel.app/games/`)
+          fetch(`${apiUrl}/games/`)
           .then((response) => response.json())
           .then((response) =>setGame(response))
           .catch((error) => console.log(error))

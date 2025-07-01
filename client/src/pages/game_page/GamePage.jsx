@@ -6,9 +6,7 @@ import FriendList from "../../components/friendList/friendList"
 import RecomendationList from "../../components/friendList/recomendationList"
 import Footer from "../../components/footer/footer"
 import { useNavigate } from "react-router-dom"
-
-
-
+import { apiUrl } from './App.test.js';
 
 function GamePage(){
     const [params] = useSearchParams()
@@ -19,7 +17,7 @@ function GamePage(){
     const navigate = useNavigate();
     const TOKEN = localStorage.getItem('TOKEN')
     useEffect(() => {
-        fetch(` https://newserver-la8c7zveq-julio-raposos-projects.vercel.app/games/${params.get('id')}`)
+        fetch(`${apiUrl}/games/${params.get('id')}`)
         .then((response) => response.json())
         .then((response) =>setGame(response))
         .catch((error) => console.log(error))

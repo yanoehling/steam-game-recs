@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import Footer from '../../components/footer/footer.jsx';
 import FriendList from '../../components/friendList/friendList.jsx';
+import { apiUrl } from './App.test.js';
 
 export default function EditProfilePage(user){
     const [username, setUsername] = React.useState('')
@@ -78,7 +79,7 @@ export default function EditProfilePage(user){
         } else {
             // Usando GET com query parameters
 
-            const url = `/users/check?username=${encodeURIComponent(texto)}`;
+            const url = `${apiUrl}/users/check?username=${encodeURIComponent(texto)}`;
 
             let data_register = await fetch(url, {
                 method: "GET",
@@ -165,7 +166,7 @@ export default function EditProfilePage(user){
             }
             const jsonData = JSON.stringify(data)
             
-            let data_register = await fetch('/users', {
+            let data_register = await fetch(`${apiUrl}/users`, {
                 method: "PATCH",
                 headers: {
                     'Content-Type': 'application/json',
@@ -179,7 +180,7 @@ export default function EditProfilePage(user){
     }
 
     async function getData() {
-        const profile_data = await fetch('/users/me',
+        const profile_data = await fetch(`${apiUrl}/users/me`,
         {method: "GET",
         headers: {
             'Content-Type': 'application/json',

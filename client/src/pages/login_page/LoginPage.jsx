@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Footer from '../../components/footer/footer.jsx';
 import FriendList from '../../components/friendList/friendList.jsx';
+import { apiUrl } from './App.test.js';
 
 function LoginPage(){
     const [showFriendList, setShowFriendList] = useState(false)   
