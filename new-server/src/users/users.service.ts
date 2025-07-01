@@ -207,58 +207,23 @@ export class UsersService {
     }
 
     async addRecommendation(userId: string, friendName: string, recommendation: string) {
-        const user = await this.usersCollection.findById(userId).exec();
-        if (!user) {
-            throw new NotFoundException("could not find user");
-        }
-
         const friend = await this.usersCollection.findOne({ username: friendName }).exec();
         if (!friend) {
             throw new NotFoundException("could not find friend");
         }
 
-        if (userId == friend.id) {
-            throw new ForbiddenException("user cannot remove recommendation to itself");
-        }
-
-        const recommendationGame = await this.gamesCollection.findById(recommendation).exec();
-        if (!recommendationGame) {
-            throw new NotFoundException("could not find recommended game");
-        }
-
-        const alreadyFriends =
-            user.friends.some(f => f.id == friend.id) ||
-            friend.friends.some(f => f.id == userId);
-
-        if (!alreadyFriends) {
-            throw new ForbiddenException("users are not friends");
-        }
-
-        const friendEntry = user.friends.find(f => f.id == friend.id);
-
-        if (!friendEntry) {
-            throw new NotFoundException("friend not found in user's friends list");
-        }
-
-        const hasRecommendation = friendEntry.recommendations.includes(recommendation);
-
-        if (!hasRecommendation) {
-            throw new BadRequestException("this recommendation does not exist");
-        }
-
-        const removedRecommendation = await this.usersCollection.updateOne(
-            { _id: userId, "friends.id": friend.id },
-            { $pull: { "friends.$.recommendations": recommendation } }
+        const addedRecommendation = await this.usersCollection.updateOne(
+          { _id: friend._id, "friends.id": userId },
+          { $addToSet: { "friends.$.recommendations": recommendation } }
         );
-
-        if (removedRecommendation.modifiedCount === 0) {
-            throw new InternalServerErrorException("could not remove recommendation");
+        
+        if (addedRecommendation.modifiedCount === 0) {
+          throw new InternalServerErrorException("could not add recommendation");
         }
 
         return {
-            msg: "recommendation removed successfully",
-        };
-
+            msg: "recommendation added successfully",
+        }
     }
 
     async removeRecommendation(userId: string, friendName: string, recommendation: string) {
@@ -276,9 +241,10 @@ export class UsersService {
             throw new ForbiddenException("user cannot remove recommendation to itself");
         }
 
-        const alreadyFriends =
-            user.friends.filter(f => f.id == friend.id).length != 0 ||
-            friend.friends.filter(f => f.id == user.id).length != 0;
+        const alreadyFriends = 
+            (user.friends.filter(f => f.id == friend.id).length != 0) 
+            ||
+            (friend.friends.filter(f => f.id == userId).length != 0)
 
         if (!alreadyFriends) {
             throw new ForbiddenException("users are not friends");
