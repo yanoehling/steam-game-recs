@@ -1,5 +1,4 @@
 import '../../style/main.css';
-import '../../assets/games_img/img_import'
 
 function Game({ img, title, price, id}){
     return(

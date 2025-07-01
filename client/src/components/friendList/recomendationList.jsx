@@ -1,6 +1,4 @@
-import {x_button} from "../../assets/games_img/img_import"
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function FriendButton({friend, id, type}){
     const TOKEN = localStorage.getItem('TOKEN')
@@ -80,8 +78,7 @@ function FriendButton({friend, id, type}){
 
 export default function RecomendationList({onClose, id}){
     const TOKEN = localStorage.getItem('TOKEN')
-    const [searchBar, setSearchBar] = useState(true)
-    const [type, setType] = useState(false)
+    const [type, setType] = useState(true)
     const [amigos, setAmigos] = useState([])
 
     const mudarAmigos = async () => {
@@ -114,7 +111,7 @@ export default function RecomendationList({onClose, id}){
             <div className="friend-div">
                 <div className="friend-title">
                     <h2 >Lista de Amigos</h2>
-                    <button><img src={x_button} alt="exit_button" onClick={onClose}/></button>
+                    <button><img src={"https://drive.google.com/thumbnail?id=1Sx5aQz1D0GSFGaKEk2-z18IkAC7hKlxC&sz=s800"} alt="exit_button" onClick={onClose}/></button>
                 </div>
                 <div className="options-friend">
                     <button className="add-friend" onClick={()=> {setType(true)}}>Adicionar Recomendação</button>
