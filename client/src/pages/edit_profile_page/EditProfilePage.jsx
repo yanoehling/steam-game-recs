@@ -9,6 +9,7 @@ import Footer from '../../components/footer/footer.jsx';
 import FriendList from '../../components/friendList/friendList.jsx';
 
 export default function EditProfilePage(user){
+    const [username, setUsername] = React.useState('')
     const [gotData, setGotData] = React.useState(false)
     const [validez, setValidez] = React.useState(Array(5).fill(false))
     const [valores, setValores] = React.useState(Array(6).fill(''))
@@ -70,13 +71,19 @@ export default function EditProfilePage(user){
         } else if (texto.includes(" ")) {
             respostas.validade = false; 
             respostas.status = `${nome} não pode ter espaços vazios.`
+        } else if (texto === username){
+            respostas.validade = true;
+            respostas.status = '🗸';
         } else {
             // Usando GET com query parameters
-            const url = `/check-user?username=${encodeURIComponent(texto)}`;
+
+            const url = `/users/check?username=${encodeURIComponent(texto)}`;
 
             let data_register = await fetch(url, {
                 method: "GET",
-                headers: {'Content-Type': 'application/json'}
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
             const serverResponse = await data_register.json()
             if (!serverResponse.userExists) {
@@ -166,7 +173,7 @@ export default function EditProfilePage(user){
             })
 
             const serverResponse = await data_register.json();
-            serverResponse.msg === "Sucesso ao editar perfil." ? navigate('/home') : console.log(serverResponse.msg)
+            serverResponse.msg === "Sucesso ao editar perfil" ? navigate('/home') : console.log(serverResponse.msg)
         }
     }
 
@@ -182,6 +189,7 @@ export default function EditProfilePage(user){
         if (serverResponse._id) {
             let nextValores = [serverResponse.name, serverResponse.username, serverResponse.birthday, serverResponse.email, serverResponse.password, serverResponse.password]
             setGotData(true)
+            setUsername(serverResponse.username)
             setValores(nextValores)
         } else {
             console.log(serverResponse);
