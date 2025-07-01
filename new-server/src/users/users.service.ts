@@ -277,8 +277,8 @@ export class UsersService {
         }
 
         const alreadyFriends =
-            user.friends.some(f => f.id == friend.id) ||
-            friend.friends.some(f => f.id == userId);
+            user.friends.filter(f => f.id == friend.id).length != 0 ||
+            friend.friends.filter(f => f.id == user.id).length != 0;
 
         if (!alreadyFriends) {
             throw new ForbiddenException("users are not friends");

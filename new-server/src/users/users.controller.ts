@@ -53,13 +53,6 @@ export class UsersController {
         return this.usersService.getFriendList(req.user._id)
     }
 
-    // @UseGuards(AuthGuard("jwt"))
-    // @Get("friendlist/data")
-    // @HttpCode(200)
-    // getFriendListData(@Req() req) {
-    //     return this.usersService.getFriendListData(req.user._id)
-    // }
-
     @Get(":id")
     @HttpCode(200)
     getUser(@Param('id') id: string) {
