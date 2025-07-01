@@ -307,17 +307,4 @@ export class UsersService {
             msg: "recommendation removed successfully",
         };
     }
-
-
-    // async getFriendListData(userId: string) {
-    //     const user = await this.usersCollection.findById(userId).exec();
-    //     if (!user) {
-    //         throw new NotFoundException("could not find user");
-    //     }
-
-    //     const friendList = user.friends;
-    //     const friendListData = 
-
-    //     return friendListData;
-    // }
 }
