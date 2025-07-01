@@ -2,8 +2,7 @@ import LoginButton from "../login_button/login_button"
 import { useState } from "react"
 
 export default function NavBar({ showFriends }){
-
-
+    const TOKEN = localStorage.getItem('TOKEN')
     return(
         <>
             <nav className="gray-color">
@@ -11,7 +10,7 @@ export default function NavBar({ showFriends }){
                     <a href="/home">LOGO</a>
                     <a href="#">Loja</a>
                     <a href="#">Suporte</a>
-                    <a onClick={showFriends}>Amigos</a>
+                    <a onClick={TOKEN ? showFriends : console.log('Acesso negado.')}>Amigos</a>
                 </div>
                 <LoginButton />
             </nav>

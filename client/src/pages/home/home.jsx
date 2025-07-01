@@ -11,6 +11,7 @@ import FriendList from '../../components/friendList/friendList.jsx';
 import { useEffect, useState } from 'react';
 import Footer from '../../components/footer/footer.jsx';
 import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -23,6 +24,7 @@ const showcaseInfo = [
 function Home() {
   const [game, setGame] = useState(null)
   const [params] = useSearchParams()
+  const navigate = useNavigate();
   useEffect(() => {
           fetch(`http://localhost:5000/games/`)
           .then((response) => response.json())
@@ -47,6 +49,12 @@ function Home() {
 
   }
 
+  const redirectLogin = () => {
+    if (!TOKEN) {
+      navigate('/')
+    }
+  }
+
   const showFriends = () => {
     if(TOKEN){
       setShowFriendList(true)
@@ -56,7 +64,7 @@ function Home() {
   return (
     <>
     {game &&(<>
-    <main className="roboto">
+    <main className="roboto" onLoad={redirectLogin}>
       {showFriendList && (
         <FriendList onClose={() => setShowFriendList(false)}/>
       )}

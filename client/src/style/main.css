@@ -34,6 +34,10 @@ nav{
   gap: 40px;
 }
 
+.input-friend{
+  color: #000000;
+}
+
 .flex-container-column{
   display: flex;
   align-items: center;
@@ -409,7 +413,7 @@ a{
   border: none;
   cursor: pointer;
   position: relative;
-  left: 50px;
+  left: 30px;
 }
 .friend-title{
   width: 100%;

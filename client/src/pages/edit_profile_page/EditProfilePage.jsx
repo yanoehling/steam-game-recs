@@ -1,6 +1,7 @@
 import '../../style/main.css';
 import NavBar from '../../components/nav/nav.jsx';
 import React, { useState } from "react";
+import { useEffect } from 'react';
 import Campo from '../../components/campos/Campo'
 import CampoSenhas from '../../components/campos/CampoSenhas';
 import { useNavigate } from 'react-router-dom';
@@ -17,11 +18,11 @@ export default function EditProfilePage(user){
     const navigate = useNavigate();
     const TOKEN = localStorage.getItem("TOKEN")
 
-    const navigateHome = () => {
+    useEffect(()=>{
         if (!TOKEN) {
-            navigate('/home')
+            navigate('/')
         }
-    }
+    }, [TOKEN])
     
     const showFriends = () => {
         if(TOKEN){
@@ -202,7 +203,7 @@ export default function EditProfilePage(user){
     } else {
         return (
             <>
-            <main className="roboto fundo-jogos" onLoad={navigateHome}>
+            <main className="roboto fundo-jogos">
                 {showFriendList && (
                     <FriendList onClose={() => setShowFriendList(false)}/>
                 )}

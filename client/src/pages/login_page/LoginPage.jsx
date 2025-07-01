@@ -2,7 +2,8 @@ import '../../style/main.css';
 import NavBar from '../../components/nav/nav.jsx';
 import Campo from '../../components/campos/Campo.jsx';
 import React, { useState } from "react";
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import Footer from '../../components/footer/footer.jsx';
 import FriendList from '../../components/friendList/friendList.jsx';
 
@@ -11,12 +12,11 @@ function LoginPage(){
     const [valores, setValores] = React.useState({})
     const navigate = useNavigate();
     const TOKEN = localStorage.getItem("TOKEN")
-
-    function navigateHome(){
+    useEffect(()=>{
         if (TOKEN) {
             navigate('/home')
         }
-    }
+    }, [TOKEN])
 
     function handleValores(e, name, index) {
         const nextValor = valores
@@ -48,7 +48,7 @@ function LoginPage(){
 
     return (
         <>
-        <main className="roboto fundo-jogos" onLoad={navigateHome}>
+        <main className="roboto fundo-jogos">
             {showFriendList && (
                 <FriendList onClose={() => setShowFriendList(false)}/>
             )}
