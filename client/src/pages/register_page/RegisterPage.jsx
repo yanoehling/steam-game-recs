@@ -66,7 +66,7 @@ export default function RegisterPage(){
             respostas.status = `${nome} não pode ter espaços vazios.`
         } else {
             // Usando GET com query parameters
-            const url = `/users/check?username=${encodeURIComponent(texto)}`;
+            const url = `https://steamrecommendationsserver.onrender.com/users/check?username=${encodeURIComponent(texto)}`;
 
             let data_register = await fetch(url, {
                 method: "GET",
@@ -145,7 +145,7 @@ export default function RegisterPage(){
             const data = {name: valores[0], username: valores[1], birthday: valores[2], email: valores[3], password: valores[4]}
             const jsonData = JSON.stringify(data)
             
-            let data_register = await fetch(`/users`, {
+            let data_register = await fetch(`https://steamrecommendationsserver.onrender.com/users`, {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: jsonData

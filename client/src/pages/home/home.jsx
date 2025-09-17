@@ -22,7 +22,7 @@ function Home() {
   const [params] = useSearchParams()
   const navigate = useNavigate();
   useEffect(() => {
-          fetch('/games/')
+          fetch('https://steamrecommendationsserver.onrender.com/games/')
           .then((response) => response.json())
           .then((response) =>setGame(response))
           .catch((error) => console.log(error))

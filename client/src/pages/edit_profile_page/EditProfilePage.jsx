@@ -79,7 +79,7 @@ export default function EditProfilePage(user){
         } else {
             // Usando GET com query parameters
 
-            const url = `/users/check?username=${encodeURIComponent(texto)}`;
+            const url = `https://steamrecommendationsserver.onrender.com/users/check?username=${encodeURIComponent(texto)}`;
 
             let data_register = await fetch(url, {
                 method: "GET",
@@ -166,7 +166,7 @@ export default function EditProfilePage(user){
             }
             const jsonData = JSON.stringify(data)
             
-            let data_register = await fetch(`/users`, {
+            let data_register = await fetch(`https://steamrecommendationsserver.onrender.com/users`, {
                 method: "PATCH",
                 headers: {
                     'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ export default function EditProfilePage(user){
     }
 
     async function getData() {
-        const profile_data = await fetch(`/users/me`,
+        const profile_data = await fetch(`https://steamrecommendationsserver.onrender.com/users/me`,
         {method: "GET",
         headers: {
             'Content-Type': 'application/json',

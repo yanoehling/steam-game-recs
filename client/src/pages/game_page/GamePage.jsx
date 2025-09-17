@@ -17,7 +17,7 @@ function GamePage(){
     const navigate = useNavigate();
     const TOKEN = localStorage.getItem('TOKEN')
     useEffect(() => {
-        fetch(`/games/${params.get('id')}`)
+        fetch(`https://steamrecommendationsserver.onrender.com/games/${params.get('id')}`)
         .then((response) => response.json())
         .then((response) =>setGame(response))
         .catch((error) => console.log(error))

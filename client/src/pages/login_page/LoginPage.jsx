@@ -31,7 +31,7 @@ function LoginPage(){
                 username: valores.username,
                 password: valores.password
             };
-            let data_register = await fetch('/auth/login', {
+            let data_register = await fetch('https://steamrecommendationsserver.onrender.com/auth/login', {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
